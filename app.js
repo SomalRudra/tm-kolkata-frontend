@@ -9,6 +9,7 @@ const openQuestionButtons = document.querySelectorAll("[data-open-question]");
 const closeModalButtons = document.querySelectorAll("[data-close-modal]");
 const registrationForm = document.querySelector("#registration");
 const questionForm = document.querySelector("#question-form");
+const reserveButtons = document.querySelectorAll("[data-reserve-date]");
 
 function formToObject(form) {
   return Object.fromEntries(new FormData(form).entries());
@@ -91,6 +92,17 @@ siteNav.addEventListener("click", (event) => {
 
 openQuestionButtons.forEach((button) => button.addEventListener("click", openModal));
 closeModalButtons.forEach((button) => button.addEventListener("click", closeModal));
+
+reserveButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const area = button.dataset.reserveArea;
+    const date = button.dataset.reserveDate;
+    registrationForm.elements.cityArea.value = area;
+    registrationForm.elements.preferredDate.value = date;
+    registrationForm.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => registrationForm.elements.fullName.focus(), 500);
+  });
+});
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && modal.getAttribute("aria-hidden") === "false") {
