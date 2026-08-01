@@ -175,12 +175,20 @@ a {
 }
 
 .hero {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.96fr);
-  gap: clamp(36px, 6vw, 72px);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0;
   align-items: center;
   min-height: calc(100vh - 78px);
   padding: 58px 0 70px;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  grid-column: 1 / 8;
+  grid-row: 1;
 }
 
 .eyebrow {
@@ -209,8 +217,8 @@ h2 {
 }
 
 h1 {
-  max-width: 820px;
-  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  max-width: 860px;
+  font-size: clamp(3.4rem, 8.4vw, 8.35rem);
 }
 
 h2 {
@@ -259,10 +267,16 @@ h3 {
 
 .hero-visual {
   position: relative;
+  z-index: 1;
+  grid-column: 7 / -1;
+  grid-row: 1;
+  align-self: center;
+  margin-top: clamp(150px, 18vw, 245px);
+  margin-left: clamp(-120px, -6vw, -54px);
   aspect-ratio: 1754 / 778;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  box-shadow: 0 22px 70px rgba(78, 52, 22, 0.16);
   background: var(--paper);
 }
 
@@ -798,8 +812,24 @@ details p {
   }
 
   .hero {
+    display: grid;
+    gap: 28px;
     min-height: auto;
     padding-top: 42px;
+  }
+
+  .hero-copy,
+  .hero-visual {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 13vw, 5.2rem);
+  }
+
+  .hero-visual {
+    margin: 0;
   }
 
   .teacher-grid {
