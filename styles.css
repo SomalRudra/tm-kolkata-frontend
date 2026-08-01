@@ -1,14 +1,18 @@
 :root {
-  --bg: #fffaf0;
+  --bg: #fff7e6;
   --paper: #fffdf8;
-  --ink: #25201a;
-  --muted: #675b4d;
-  --line: #eadfc9;
-  --saffron: #b76513;
-  --gold: #d49a2a;
-  --maroon: #6b241b;
+  --ink: #212529;
+  --muted: #5f5c58;
+  --line: #efd9bd;
+  --saffron: #a35134;
+  --gold: #d4af37;
+  --maroon: #874d38;
   --sage: #687a50;
   --shadow: 0 18px 55px rgba(78, 52, 22, 0.12);
+  --blue: #34418c;
+  --font-base: "Afacad", "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "the-seasons", Georgia, "Times New Roman", serif;
+  --font-accent: "Space Grotesk", "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
 * {
@@ -23,7 +27,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-base);
   line-height: 1.55;
 }
 
@@ -82,7 +86,7 @@ a {
   border-radius: 50%;
   background: var(--maroon);
   color: #fff8df;
-  font-family: Georgia, serif;
+  font-family: var(--font-heading);
   font-weight: 700;
 }
 
@@ -101,7 +105,9 @@ a {
   align-items: center;
   gap: 22px;
   color: var(--muted);
+  font-family: var(--font-base);
   font-size: 0.94rem;
+  font-weight: 700;
 }
 
 .site-nav a:hover {
@@ -180,6 +186,7 @@ a {
 .eyebrow {
   margin: 0 0 12px;
   color: var(--saffron);
+  font-family: var(--font-accent);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -196,7 +203,7 @@ p {
 h1,
 h2 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading);
   line-height: 1.05;
   font-weight: 700;
 }
@@ -274,7 +281,7 @@ h3 {
   border-radius: 50%;
   background: linear-gradient(145deg, #f5d48a, #8f3e24);
   color: white;
-  font-family: Georgia, serif;
+  font-family: var(--font-heading);
   font-size: 2rem;
 }
 
@@ -301,7 +308,8 @@ h3 {
 }
 
 .intro-band,
-.community-band {
+.community-band,
+.resource-band {
   background: #f7ecd7;
   border-block: 1px solid var(--line);
 }
@@ -324,7 +332,8 @@ h3 {
 
 .events-section,
 .faq-section,
-#teachers {
+#teachers,
+.resource-band {
   padding: 86px 0;
 }
 
@@ -351,6 +360,8 @@ h3 {
 .event-card,
 .form-panel,
 .teacher-card,
+.testimonial-card,
+.blog-list a,
 .schedule-list a,
 .question-panel,
 details {
@@ -358,6 +369,72 @@ details {
   border-radius: 8px;
   background: var(--paper);
   box-shadow: 0 10px 32px rgba(78, 52, 22, 0.06);
+}
+
+.resource-layout {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 26px;
+  align-items: start;
+}
+
+.testimonial-grid,
+.blog-list {
+  display: grid;
+  gap: 14px;
+}
+
+.testimonial-card {
+  padding: 22px;
+}
+
+.testimonial-card p {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 1.06rem;
+}
+
+.testimonial-card strong,
+.testimonial-card span,
+.blog-list span,
+.blog-list em {
+  display: block;
+}
+
+.testimonial-card strong {
+  color: var(--maroon);
+  font-size: 1.08rem;
+}
+
+.testimonial-card span,
+.blog-list span,
+.blog-list em {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.blog-list a {
+  display: grid;
+  gap: 8px;
+  padding: 22px;
+}
+
+.blog-list a:hover {
+  border-color: rgba(163, 81, 52, 0.42);
+  transform: translateY(-2px);
+}
+
+.blog-list strong {
+  color: var(--blue);
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+.blog-list em {
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .event-card {
@@ -596,7 +673,8 @@ details p {
   .split,
   .event-layout,
   .community-layout,
-  .faq-layout {
+  .faq-layout,
+  .resource-layout {
     grid-template-columns: 1fr;
   }
 
