@@ -146,6 +146,16 @@ questionForm.addEventListener("submit", async (event) => {
   triggerJsonCallback("tmKolkataQuestion", payload);
   await postIfConfigured("/api/questions", payload);
 
-  const text = encodeURIComponent(`${WHATSAPP_BASE_TEXT}\n\n${payload.question}`);
+  const whatsappMessage = [
+    WHATSAPP_BASE_TEXT,
+    "",
+    `Name: ${payload.fullName}`,
+    `Email: ${payload.email}`,
+    `Phone: ${payload.phone}`,
+    "",
+    "Question:",
+    payload.question
+  ].join("\n");
+  const text = encodeURIComponent(whatsappMessage);
   window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
 });
