@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "91XXXXXXXXXX";
+const WHATSAPP_NUMBER = "918981887910";
 const WHATSAPP_BASE_TEXT = "Hi, I have a question about TM Kolkata";
 const API_BASE_URL = window.TM_KOLKATA_API_URL || "";
 
