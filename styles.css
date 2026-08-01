@@ -179,15 +179,16 @@ a {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 0;
-  align-items: center;
+  align-items: start;
   min-height: calc(100vh - 78px);
   padding: 58px 0 70px;
+  overflow: hidden;
 }
 
 .hero-copy {
   position: relative;
   z-index: 2;
-  grid-column: 1 / 8;
+  grid-column: 1 / 9;
   grid-row: 1;
 }
 
@@ -217,8 +218,8 @@ h2 {
 }
 
 h1 {
-  max-width: 860px;
-  font-size: clamp(3.4rem, 8.4vw, 8.35rem);
+  max-width: 940px;
+  font-size: clamp(3.4rem, 8.2vw, 8.1rem);
 }
 
 h2 {
@@ -268,16 +269,16 @@ h3 {
 .hero-visual {
   position: relative;
   z-index: 1;
-  grid-column: 7 / -1;
+  grid-column: 5 / -1;
   grid-row: 1;
-  align-self: center;
-  margin-top: clamp(150px, 18vw, 245px);
-  margin-left: clamp(-120px, -6vw, -54px);
+  align-self: start;
+  margin-top: clamp(285px, 31vw, 455px);
+  margin-left: clamp(-260px, -13vw, -150px);
   aspect-ratio: 1754 / 778;
-  border-radius: 12px;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 22px 70px rgba(78, 52, 22, 0.16);
-  background: var(--paper);
+  box-shadow: none;
+  background: transparent;
 }
 
 .hero-visual > img {
@@ -814,6 +815,7 @@ details p {
   .hero {
     display: grid;
     gap: 28px;
+    overflow: visible;
     min-height: auto;
     padding-top: 42px;
   }
