@@ -80,6 +80,16 @@ function formatEventTime(value) {
   }).format(new Date(value));
 }
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#039;"
+  })[character]);
+}
+
 function eventLabel(event) {
   return `${formatEventDate(event.event_date)} - ${event.kolkata_region}`;
 }
@@ -104,14 +114,14 @@ function renderEvents(events) {
     card.className = "event-card";
     card.innerHTML = `
       <span class="type-tag ${tmEvent.event_mode === "Virtual" ? "online" : ""}">
-        ${tmEvent.event_mode} | ${tmEvent.kolkata_region}
+        ${escapeHtml(tmEvent.event_mode)} | ${escapeHtml(tmEvent.kolkata_region)}
       </span>
-      <h3>${tmEvent.title}</h3>
+      <h3>${escapeHtml(tmEvent.title)}</h3>
       <div class="event-time">
         <strong>${formatEventDate(tmEvent.event_date)}</strong>
         <span>${formatEventTime(tmEvent.event_date)}</span>
       </div>
-      <p>${tmEvent.venue}</p>
+      <p>${escapeHtml(tmEvent.venue)}</p>
       <button class="button primary reserve-button" type="button" data-event-id="${tmEvent.id}">
         Reserve Seat
       </button>
