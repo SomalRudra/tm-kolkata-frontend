@@ -215,6 +215,7 @@ registrationForm.addEventListener("submit", async (event) => {
     return;
   }
   const registrationPayload = {
+    event_id: selectedEvent.id,
     full_name: payload.fullName,
     email: payload.email,
     phone: payload.phone,
