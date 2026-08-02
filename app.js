@@ -1,7 +1,7 @@
 const WHATSAPP_NUMBER = "918981887910";
 const WHATSAPP_BASE_TEXT = "Hi, I have a question about TM Kolkata";
 const CLIENT_SITE_URL = "https://tmkolkata.org/";
-const ANALYTICS_FUNNEL_URL = window.TM_KOLKATA_ANALYTICS_URL || "https://tmkolkata.org/analyticFunnel";
+const ANALYTICS_FUNNEL_URL = window.TM_KOLKATA_ANALYTICS_URL || "https://analytics.tmkolkata.org/";
 const API_BASE_URL = window.TM_KOLKATA_API_URL || "https://tm-kolkata-backend-production.up.railway.app";
 
 const navToggle = document.querySelector(".nav-toggle");

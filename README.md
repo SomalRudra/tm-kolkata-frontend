@@ -19,14 +19,14 @@ The included workflow publishes this static folder.
 
 - Primary client-facing site: `https://tmkolkata.org/`
 - Secondary domain: `https://tm-kolkata.org/`
-- Analytics funnel: `https://tmkolkata.org/analyticFunnel`
+- Analytics funnel dashboard: `https://analytics.tmkolkata.org/`
 
 The form saves leads to `localStorage`, dispatches JSON callbacks, posts lead data to the Railway backend, and sends conversion events to the analytics funnel. Override these defaults before `app.js` loads when testing alternate environments:
 
 ```html
 <script>
   window.TM_KOLKATA_API_URL = "https://your-api.example.com";
-  window.TM_KOLKATA_ANALYTICS_URL = "https://your-analytics.example.com/analyticFunnel";
+  window.TM_KOLKATA_ANALYTICS_URL = "https://your-analytics.example.com/";
 </script>
 ```
 
