@@ -15,8 +15,31 @@ const eventGrid = document.querySelector("#event-grid");
 const preferredDateSelect = registrationForm.elements.preferredDate;
 let publishedEvents = [];
 
+function getTrafficAttribution() {
+  const params = new URLSearchParams(window.location.search);
+  const utmSource = params.get("utm_source") || "tm-kolkata-frontend";
+  const normalizedSource = utmSource.toLowerCase();
+  const sourceChannel = params.has("fbclid") || ["facebook", "fb", "meta", "instagram"].includes(normalizedSource)
+    ? "Meta Ads"
+    : "Direct Web";
+
+  return {
+    source_channel: sourceChannel,
+    utm_source: utmSource,
+    utm_campaign: params.get("utm_campaign") || "public-event-registration"
+  };
+}
+
 function formToObject(form) {
-  return Object.fromEntries(new FormData(form).entries());
+  const formData = new FormData(form);
+  const payload = Object.fromEntries(formData.entries());
+  const motivations = formData.getAll("motivation");
+
+  if (motivations.length) {
+    payload.motivation = motivations.join(", ");
+  }
+
+  return payload;
 }
 
 function setMessage(form, message, isError = false) {
@@ -254,17 +277,28 @@ registrationForm.addEventListener("submit", async (event) => {
     return;
   }
   const registrationPayload = {
+    ...getTrafficAttribution(),
     event_id: selectedEvent.id,
     full_name: payload.fullName,
     email: payload.email,
     phone: payload.phone,
+    city_state: payload.cityState,
     kolkata_region: selectedEvent.kolkata_region,
     event_date: selectedEvent.event_date,
     event_mode: selectedEvent.event_mode,
-    source_channel: "Direct Web",
-    utm_source: "tm-kolkata-frontend",
-    utm_campaign: "public-event-registration",
-    bucket: "BUCKET_B_REGISTERED"
+    bucket: "BUCKET_B_REGISTERED",
+    age_group: payload.ageGroup,
+    occupation: payload.occupation,
+    heard_about: payload.heardAbout,
+    motivation: payload.motivation,
+    prior_meditation: payload.priorMeditation,
+    prior_meditation_types: payload.priorMeditationTypes,
+    current_challenge: payload.currentChallenge,
+    stress_level: payload.stressLevel,
+    practice_commitment: payload.practiceCommitment,
+    best_contact_time: payload.bestContactTime,
+    future_updates: payload.futureUpdates,
+    pre_session_questions: payload.preSessionQuestions
   };
 
   persistLead("registrations", registrationPayload);
@@ -290,7 +324,7 @@ questionForm.addEventListener("submit", async (event) => {
     email: payload.email,
     phone: payload.phone,
     question_text: payload.question,
-    source_channel: "Direct Web",
+    source_channel: getTrafficAttribution().source_channel,
     bucket: "BUCKET_A_UNCONVERTED",
     redirected_to_whatsapp: true
   };

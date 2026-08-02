@@ -144,6 +144,10 @@
                   <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9+\-\s]{8,15}">
                 </label>
                 <label>
+                  City / State
+                  <input name="cityState" type="text" autocomplete="address-level2" required>
+                </label>
+                <label>
                   Selected City Area
                   <select name="cityArea" required>
                     <option value="">Choose an option</option>
@@ -151,11 +155,126 @@
                     <option>Online</option>
                   </select>
                 </label>
-                <label class="full-width">
+                <label>
                   Preferred Date
                   <select name="preferredDate" required>
                     <option value="">Choose a date</option>
                   </select>
+                </label>
+                <label>
+                  Age Group
+                  <select name="ageGroup">
+                    <option value="">Choose an option</option>
+                    <option>Under 18</option>
+                    <option>18-25</option>
+                    <option>26-35</option>
+                    <option>36-50</option>
+                    <option>51-65</option>
+                    <option>Above 65</option>
+                  </select>
+                </label>
+                <label>
+                  Occupation
+                  <select name="occupation">
+                    <option value="">Choose an option</option>
+                    <option>Student</option>
+                    <option>Working Professional</option>
+                    <option>Business Owner</option>
+                    <option>Homemaker</option>
+                    <option>Teacher</option>
+                    <option>Healthcare Professional</option>
+                    <option>Retired</option>
+                    <option>Other</option>
+                  </select>
+                </label>
+                <label>
+                  How did you hear about this program?
+                  <select name="heardAbout">
+                    <option value="">Choose an option</option>
+                    <option>Facebook</option>
+                    <option>Instagram</option>
+                    <option>Google Search</option>
+                    <option>YouTube</option>
+                    <option>Friend/Family</option>
+                    <option>WhatsApp</option>
+                    <option>Other</option>
+                  </select>
+                </label>
+                <fieldset class="choice-group full-width">
+                  <legend>What motivated you to learn TM?</legend>
+                  <label><input name="motivation" type="checkbox" value="Reduce stress"> Reduce stress</label>
+                  <label><input name="motivation" type="checkbox" value="Better sleep"> Better sleep</label>
+                  <label><input name="motivation" type="checkbox" value="Anxiety management"> Anxiety management</label>
+                  <label><input name="motivation" type="checkbox" value="Improve focus and memory"> Improve focus and memory</label>
+                  <label><input name="motivation" type="checkbox" value="Better decision-making"> Better decision-making</label>
+                  <label><input name="motivation" type="checkbox" value="Better physical health"> Better physical health</label>
+                  <label><input name="motivation" type="checkbox" value="Emotional well-being"> Emotional well-being</label>
+                  <label><input name="motivation" type="checkbox" value="Spiritual growth"> Spiritual growth</label>
+                  <label><input name="motivation" type="checkbox" value="Personal development"> Personal development</label>
+                  <label><input name="motivation" type="checkbox" value="Curiosity"> Curiosity</label>
+                </fieldset>
+                <label>
+                  Prior Meditation Practice
+                  <select name="priorMeditation">
+                    <option value="">Choose an option</option>
+                    <option>No</option>
+                    <option>Yes, occasionally</option>
+                    <option>Yes, regularly</option>
+                  </select>
+                </label>
+                <label>
+                  If yes, which type?
+                  <input name="priorMeditationTypes" type="text">
+                </label>
+                <label class="full-width">
+                  Biggest current challenge
+                  <textarea name="currentChallenge" rows="3"></textarea>
+                </label>
+                <label>
+                  Current Stress Level
+                  <select name="stressLevel">
+                    <option value="">Choose 1-10</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                  </select>
+                </label>
+                <label>
+                  Commitment to twice-daily practice
+                  <select name="practiceCommitment">
+                    <option value="">Choose an option</option>
+                    <option>Very committed</option>
+                    <option>Probably committed</option>
+                    <option>Unsure</option>
+                  </select>
+                </label>
+                <label>
+                  Best time to contact you
+                  <select name="bestContactTime">
+                    <option value="">Choose an option</option>
+                    <option>Morning</option>
+                    <option>Afternoon</option>
+                    <option>Evening</option>
+                  </select>
+                </label>
+                <label>
+                  Receive future updates?
+                  <select name="futureUpdates">
+                    <option value="">Choose an option</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </label>
+                <label class="full-width">
+                  Questions before the intro session
+                  <textarea name="preSessionQuestions" rows="3"></textarea>
                 </label>
               </div>
               <button class="button primary full-width" type="submit">Submit Registration</button>
@@ -411,6 +530,13 @@
       <div>
         <strong>TM Kolkata</strong>
         <p>Transcendental Meditation introductory talks and community support in Kolkata.</p>
+        <p class="legal-copy">
+          Copyright &copy; 2026 TM Kolkata. All rights reserved. Transcendental Meditation&reg;,
+          TM&reg;, Maharishi&reg;, and related marks are trademarks or registered trademarks of their
+          respective owners and are used only with authorization where applicable. Linked third-party
+          research, articles, videos, and testimonials remain the property of their original publishers.
+          This website provides general educational information and is not medical advice.
+        </p>
       </div>
       <button class="text-button" type="button" data-open-question>Ask a Question</button>
     </footer>

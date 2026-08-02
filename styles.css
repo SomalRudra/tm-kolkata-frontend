@@ -487,6 +487,40 @@ summary:focus-visible {
   outline-offset: 3px;
 }
 
+.choice-group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #cfdedb;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.64);
+}
+
+.choice-group legend {
+  padding: 0 8px;
+  color: var(--slate);
+  font-size: 0.94rem;
+  font-weight: 900;
+}
+
+.choice-group label {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.choice-group input {
+  width: 18px;
+  min-height: 18px;
+  margin-top: 2px;
+  accent-color: var(--teal);
+}
+
 .full-width {
   grid-column: 1 / -1;
   width: 100%;
@@ -804,6 +838,12 @@ details p {
   color: var(--muted);
 }
 
+.legal-copy {
+  max-width: 880px;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
 .whatsapp-float {
   position: fixed;
   right: 18px;
@@ -949,6 +989,10 @@ details p {
   }
 
   .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .choice-group {
     grid-template-columns: 1fr;
   }
 
