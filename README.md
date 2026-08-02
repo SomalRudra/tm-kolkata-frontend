@@ -17,8 +17,9 @@ The included workflow publishes this static folder.
 
 ## Production URLs
 
-- Client-facing site: `http://tm-kolkata.org/`
-- Analytics funnel: `http://tm-kolkata.org/analyticFunnel`
+- Primary client-facing site: `http://tmkolkata.org/`
+- Secondary domain: `http://tm-kolkata.org/`
+- Analytics funnel: `http://tmkolkata.org/analyticFunnel`
 
 The form saves leads to `localStorage`, dispatches JSON callbacks, posts lead data to the Railway backend, and sends conversion events to the analytics funnel. Override these defaults before `app.js` loads when testing alternate environments:
 
