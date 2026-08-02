@@ -15,11 +15,17 @@ python3 -m http.server 4173
 Push to `main`, then enable GitHub Pages with GitHub Actions as the source.
 The included workflow publishes this static folder.
 
-The form saves leads to `localStorage`, dispatches JSON callbacks, and posts to a backend when `window.TM_KOLKATA_API_URL` is configured.
+## Production URLs
+
+- Client-facing site: `http://tm-kolkata.org/`
+- Analytics funnel: `http://tm-kolkata.org/analyticFunnel`
+
+The form saves leads to `localStorage`, dispatches JSON callbacks, posts lead data to the Railway backend, and sends conversion events to the analytics funnel. Override these defaults before `app.js` loads when testing alternate environments:
 
 ```html
 <script>
   window.TM_KOLKATA_API_URL = "https://your-api.example.com";
+  window.TM_KOLKATA_ANALYTICS_URL = "https://your-analytics.example.com/analyticFunnel";
 </script>
 ```
 

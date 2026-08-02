@@ -1,5 +1,7 @@
 const WHATSAPP_NUMBER = "918981887910";
 const WHATSAPP_BASE_TEXT = "Hi, I have a question about TM Kolkata";
+const CLIENT_SITE_URL = "http://tm-kolkata.org/";
+const ANALYTICS_FUNNEL_URL = window.TM_KOLKATA_ANALYTICS_URL || "http://tm-kolkata.org/analyticFunnel";
 const API_BASE_URL = window.TM_KOLKATA_API_URL || "https://tm-kolkata-backend-production.up.railway.app";
 
 const navToggle = document.querySelector(".nav-toggle");
@@ -53,6 +55,37 @@ async function postIfConfigured(endpoint, payload) {
     });
   } catch (error) {
     console.warn("TM Kolkata API callback failed", error);
+  }
+}
+
+function trackAnalyticsFunnel(eventName, payload = {}) {
+  const body = JSON.stringify({
+    event_name: eventName,
+    client_site_url: CLIENT_SITE_URL,
+    page_url: window.location.href,
+    page_path: window.location.pathname,
+    occurred_at: new Date().toISOString(),
+    payload
+  });
+
+  try {
+    if (navigator.sendBeacon) {
+      const blob = new Blob([body], { type: "text/plain;charset=UTF-8" });
+      if (navigator.sendBeacon(ANALYTICS_FUNNEL_URL, blob)) {
+        return;
+      }
+    }
+
+    fetch(ANALYTICS_FUNNEL_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body,
+      keepalive: true
+    }).catch((error) => {
+      console.warn("TM Kolkata analytics funnel callback failed", error);
+    });
+  } catch (error) {
+    console.warn("TM Kolkata analytics funnel callback failed", error);
   }
 }
 
@@ -187,6 +220,12 @@ eventGrid.addEventListener("click", (event) => {
 
   const tmEvent = publishedEvents.find((item) => String(item.id) === button.dataset.eventId);
   if (tmEvent) {
+    trackAnalyticsFunnel("reserve_seat_clicked", {
+      event_id: tmEvent.id,
+      kolkata_region: tmEvent.kolkata_region,
+      event_date: tmEvent.event_date,
+      event_mode: tmEvent.event_mode
+    });
     registrationForm.elements.cityArea.value = tmEvent.kolkata_region;
     preferredDateSelect.value = String(tmEvent.id);
     registrationForm.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -230,6 +269,7 @@ registrationForm.addEventListener("submit", async (event) => {
 
   persistLead("registrations", registrationPayload);
   triggerJsonCallback("tmKolkataRegistration", registrationPayload);
+  trackAnalyticsFunnel("registration_submitted", registrationPayload);
   await postIfConfigured("/api/leads/register", registrationPayload);
 
   registrationForm.reset();
@@ -257,6 +297,7 @@ questionForm.addEventListener("submit", async (event) => {
 
   persistLead("questions", inquiryPayload);
   triggerJsonCallback("tmKolkataQuestion", inquiryPayload);
+  trackAnalyticsFunnel("whatsapp_inquiry_submitted", inquiryPayload);
   await postIfConfigured("/api/leads/inquiry", inquiryPayload);
 
   const whatsappMessage = [
