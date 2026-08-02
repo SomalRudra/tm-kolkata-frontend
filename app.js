@@ -122,6 +122,7 @@ function renderEvents(events) {
         <span>${formatEventTime(tmEvent.event_date)}</span>
       </div>
       <p>${escapeHtml(tmEvent.venue)}</p>
+      ${tmEvent.description ? `<p>${escapeHtml(tmEvent.description)}</p>` : ""}
       <button class="button primary reserve-button" type="button" data-event-id="${tmEvent.id}">
         Reserve Seat
       </button>
