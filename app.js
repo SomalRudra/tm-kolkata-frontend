@@ -1,6 +1,6 @@
 const WHATSAPP_NUMBER = "918981887910";
 const WHATSAPP_BASE_TEXT = "Hi, I have a question about TM Kolkata";
-const API_BASE_URL = window.TM_KOLKATA_API_URL || "";
+const API_BASE_URL = window.TM_KOLKATA_API_URL || "https://tm-kolkata-backend-production.up.railway.app";
 
 const navToggle = document.querySelector(".nav-toggle");
 const siteNav = document.querySelector("#site-nav");
@@ -9,7 +9,9 @@ const openQuestionButtons = document.querySelectorAll("[data-open-question]");
 const closeModalButtons = document.querySelectorAll("[data-close-modal]");
 const registrationForm = document.querySelector("#registration");
 const questionForm = document.querySelector("#question-form");
-const reserveButtons = document.querySelectorAll("[data-reserve-date]");
+const eventGrid = document.querySelector("#event-grid");
+const preferredDateSelect = registrationForm.elements.preferredDate;
+let publishedEvents = [];
 
 function formToObject(form) {
   return Object.fromEntries(new FormData(form).entries());
@@ -54,6 +56,79 @@ async function postIfConfigured(endpoint, payload) {
   }
 }
 
+async function fetchJson(endpoint) {
+  const response = await fetch(`${API_BASE_URL}${endpoint}`);
+  if (!response.ok) {
+    throw new Error(`TM Kolkata API returned ${response.status}`);
+  }
+  return response.json();
+}
+
+function formatEventDate(value) {
+  return new Intl.DateTimeFormat("en-IN", {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  }).format(new Date(value));
+}
+
+function formatEventTime(value) {
+  return new Intl.DateTimeFormat("en-IN", {
+    hour: "numeric",
+    minute: "2-digit"
+  }).format(new Date(value));
+}
+
+function eventLabel(event) {
+  return `${formatEventDate(event.event_date)} - ${event.kolkata_region}`;
+}
+
+function renderEvents(events) {
+  publishedEvents = events;
+  eventGrid.innerHTML = "";
+  preferredDateSelect.innerHTML = '<option value="">Choose a date</option>';
+
+  if (!events.length) {
+    eventGrid.innerHTML = '<p class="event-empty">No upcoming sessions are open for registration right now.</p>';
+    return;
+  }
+
+  events.forEach((tmEvent) => {
+    const option = document.createElement("option");
+    option.value = String(tmEvent.id);
+    option.textContent = eventLabel(tmEvent);
+    preferredDateSelect.append(option);
+
+    const card = document.createElement("article");
+    card.className = "event-card";
+    card.innerHTML = `
+      <span class="type-tag ${tmEvent.event_mode === "Virtual" ? "online" : ""}">
+        ${tmEvent.event_mode} | ${tmEvent.kolkata_region}
+      </span>
+      <h3>${tmEvent.title}</h3>
+      <div class="event-time">
+        <strong>${formatEventDate(tmEvent.event_date)}</strong>
+        <span>${formatEventTime(tmEvent.event_date)}</span>
+      </div>
+      <p>${tmEvent.venue}</p>
+      <button class="button primary reserve-button" type="button" data-event-id="${tmEvent.id}">
+        Reserve Seat
+      </button>
+    `;
+    eventGrid.append(card);
+  });
+}
+
+async function loadEvents() {
+  try {
+    renderEvents(await fetchJson("/api/events"));
+  } catch (error) {
+    console.warn("TM Kolkata event feed failed", error);
+    renderEvents([]);
+  }
+}
+
 function triggerJsonCallback(eventName, payload) {
   window.dispatchEvent(new CustomEvent(eventName, { detail: payload }));
   console.info(eventName, JSON.stringify(payload));
@@ -93,15 +168,19 @@ siteNav.addEventListener("click", (event) => {
 openQuestionButtons.forEach((button) => button.addEventListener("click", openModal));
 closeModalButtons.forEach((button) => button.addEventListener("click", closeModal));
 
-reserveButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const area = button.dataset.reserveArea;
-    const date = button.dataset.reserveDate;
-    registrationForm.elements.cityArea.value = area;
-    registrationForm.elements.preferredDate.value = date;
+eventGrid.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-event-id]");
+  if (!button) {
+    return;
+  }
+
+  const tmEvent = publishedEvents.find((item) => String(item.id) === button.dataset.eventId);
+  if (tmEvent) {
+    registrationForm.elements.cityArea.value = tmEvent.kolkata_region;
+    preferredDateSelect.value = String(tmEvent.id);
     registrationForm.scrollIntoView({ behavior: "smooth", block: "center" });
     setTimeout(() => registrationForm.elements.fullName.focus(), 500);
-  });
+  }
 });
 
 document.addEventListener("keydown", (event) => {
@@ -117,14 +196,29 @@ registrationForm.addEventListener("submit", async (event) => {
   }
 
   const payload = {
-    ...formToObject(registrationForm),
-    source: "tm-kolkata-landing-page",
-    submittedAt: new Date().toISOString()
+    ...formToObject(registrationForm)
+  };
+  const selectedEvent = publishedEvents.find((tmEvent) => String(tmEvent.id) === payload.preferredDate);
+  if (!selectedEvent) {
+    setMessage(registrationForm, "Please choose an available event.", true);
+    return;
+  }
+  const registrationPayload = {
+    full_name: payload.fullName,
+    email: payload.email,
+    phone: payload.phone,
+    kolkata_region: selectedEvent.kolkata_region,
+    event_date: selectedEvent.event_date,
+    event_mode: selectedEvent.event_mode,
+    source_channel: "Direct Web",
+    utm_source: "tm-kolkata-frontend",
+    utm_campaign: "public-event-registration",
+    bucket: "BUCKET_B_REGISTERED"
   };
 
-  persistLead("registrations", payload);
-  triggerJsonCallback("tmKolkataRegistration", payload);
-  await postIfConfigured("/api/registrations", payload);
+  persistLead("registrations", registrationPayload);
+  triggerJsonCallback("tmKolkataRegistration", registrationPayload);
+  await postIfConfigured("/api/leads/register", registrationPayload);
 
   registrationForm.reset();
   setMessage(registrationForm, "Thank you. Your intro talk registration has been received.");
@@ -137,14 +231,21 @@ questionForm.addEventListener("submit", async (event) => {
   }
 
   const payload = {
-    ...formToObject(questionForm),
-    source: "tm-kolkata-whatsapp-lead",
-    submittedAt: new Date().toISOString()
+    ...formToObject(questionForm)
+  };
+  const inquiryPayload = {
+    full_name: payload.fullName,
+    email: payload.email,
+    phone: payload.phone,
+    question_text: payload.question,
+    source_channel: "Direct Web",
+    bucket: "BUCKET_A_UNCONVERTED",
+    redirected_to_whatsapp: true
   };
 
-  persistLead("questions", payload);
-  triggerJsonCallback("tmKolkataQuestion", payload);
-  await postIfConfigured("/api/questions", payload);
+  persistLead("questions", inquiryPayload);
+  triggerJsonCallback("tmKolkataQuestion", inquiryPayload);
+  await postIfConfigured("/api/leads/inquiry", inquiryPayload);
 
   const whatsappMessage = [
     WHATSAPP_BASE_TEXT,
@@ -159,3 +260,5 @@ questionForm.addEventListener("submit", async (event) => {
   const text = encodeURIComponent(whatsappMessage);
   window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
 });
+
+loadEvents();

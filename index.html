@@ -114,31 +114,8 @@
             <h2>Choose your free introductory talk.</h2>
             <p>Reserve a seat for Salt Lake or join online by Zoom. We will confirm details by phone and email.</p>
           </div>
-          <div class="event-grid" aria-label="Upcoming introductory talks">
-            <article class="event-card">
-              <span class="type-tag">In-Person | Salt Lake</span>
-              <h3>Salt Lake Introductory Talk</h3>
-              <div class="event-time">
-                <strong>Mon, 10 Aug 2026</strong>
-                <span>5:30 PM - 6:30 PM</span>
-              </div>
-              <p>TM Centre, Salt Lake, Kolkata</p>
-              <button class="button primary reserve-button" type="button" data-reserve-date="Mon, 10 Aug 2026 - Salt Lake" data-reserve-area="Salt Lake">
-                Reserve Seat
-              </button>
-            </article>
-            <article class="event-card">
-              <span class="type-tag online">Online | Zoom</span>
-              <h3>Online Kolkata Intro Session</h3>
-              <div class="event-time">
-                <strong>Fri, 14 Aug 2026</strong>
-                <span>7:00 PM - 7:45 PM</span>
-              </div>
-              <p>Zoom link shared after registration</p>
-              <button class="button primary reserve-button" type="button" data-reserve-date="Fri, 14 Aug 2026 - Online" data-reserve-area="Online">
-                Reserve Seat
-              </button>
-            </article>
+          <div id="event-grid" class="event-grid" aria-label="Upcoming introductory talks">
+            <p class="event-empty">Loading upcoming TM Kolkata sessions...</p>
           </div>
 
           <div class="registration-panel">
@@ -169,8 +146,6 @@
                   Preferred Date
                   <select name="preferredDate" required>
                     <option value="">Choose a date</option>
-                    <option>Mon, 10 Aug 2026 - Salt Lake</option>
-                    <option>Fri, 14 Aug 2026 - Online</option>
                   </select>
                 </label>
               </div>
