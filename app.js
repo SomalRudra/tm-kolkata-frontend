@@ -10,6 +10,7 @@ const modal = document.querySelector("#question-modal");
 const openQuestionButtons = document.querySelectorAll("[data-open-question]");
 const closeModalButtons = document.querySelectorAll("[data-close-modal]");
 const registrationForm = document.querySelector("#registration");
+const registrationDetails = document.querySelector("#registration-details");
 const questionForm = document.querySelector("#question-form");
 const eventGrid = document.querySelector("#event-grid");
 const preferredDateSelect = registrationForm.elements.preferredDate;
@@ -220,6 +221,12 @@ function closeModal() {
   document.body.classList.remove("modal-open");
 }
 
+function openRegistrationForm() {
+  if (registrationDetails) {
+    registrationDetails.open = true;
+  }
+}
+
 navToggle.addEventListener("click", () => {
   const isOpen = siteNav.classList.toggle("is-open");
   navToggle.setAttribute("aria-expanded", String(isOpen));
@@ -234,6 +241,12 @@ siteNav.addEventListener("click", (event) => {
 
 openQuestionButtons.forEach((button) => button.addEventListener("click", openModal));
 closeModalButtons.forEach((button) => button.addEventListener("click", closeModal));
+
+document.querySelectorAll('a[href="#registration"]').forEach((link) => {
+  link.addEventListener("click", () => {
+    openRegistrationForm();
+  });
+});
 
 eventGrid.addEventListener("click", (event) => {
   const button = event.target.closest("[data-event-id]");
@@ -251,6 +264,7 @@ eventGrid.addEventListener("click", (event) => {
     });
     registrationForm.elements.cityArea.value = tmEvent.kolkata_region;
     preferredDateSelect.value = String(tmEvent.id);
+    openRegistrationForm();
     registrationForm.scrollIntoView({ behavior: "smooth", block: "center" });
     setTimeout(() => registrationForm.elements.fullName.focus(), 500);
   }
