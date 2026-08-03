@@ -21,10 +21,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://use.typekit.net/emc0xwy.css">
     <link
-      href="https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Poppins:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="styles.css?v=domain-analytics-1">
+    <link rel="stylesheet" href="styles.css?v=conversion-flow-1">
   </head>
   <body>
     <header class="site-header">
@@ -41,8 +41,9 @@
       </button>
       <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
         <a href="#about">About TM</a>
+        <a href="#trust">Teacher &amp; Science</a>
+        <a href="#testimonials">Testimonials</a>
         <a href="#events">Intro Sessions</a>
-        <a href="#trust">Teacher</a>
         <a href="#meditators">Existing Meditators</a>
         <a href="#faqs">FAQs</a>
         <a class="nav-cta" href="#registration">Register Free</a>
@@ -116,21 +117,7 @@
         </div>
       </section>
 
-      <section id="events" class="section-block event-band">
-        <div class="section-shell">
-          <div class="section-heading">
-            <p class="eyebrow">Kolkata Intro Sessions</p>
-            <h2>Choose your free introductory talk.</h2>
-            <p>Reserve a seat for Salt Lake or join online by Zoom. We will confirm details by phone and email.</p>
-          </div>
-          <div id="event-grid" class="event-grid" aria-label="Upcoming introductory talks">
-            <p class="event-empty">Loading upcoming TM Kolkata sessions...</p>
-          </div>
-
-        </div>
-      </section>
-
-      <section id="trust" class="section-block">
+      <section id="trust" class="section-block trust-section">
         <div class="section-shell trust-layout">
           <article class="teacher-panel">
             <img src="debasish_sarkar_tm.png" alt="Portrait of Debasish Sarkar">
@@ -166,7 +153,7 @@
         </div>
       </section>
 
-      <section id="resources" class="section-block resource-band">
+      <section id="testimonials" class="section-block testimonial-section">
         <div class="section-shell">
           <div class="heading-row">
             <div>
@@ -219,171 +206,233 @@
               </div>
             </article>
           </div>
+        </div>
+      </section>
 
-          <details id="registration-details" class="registration-panel">
-            <summary>
-              <span>
-                Register for an intro talk
-                <small>Choose Salt Lake or Online and share your details for confirmation.</small>
-              </span>
-              <strong>Open Form</strong>
-            </summary>
-            <form id="registration" class="form-panel" novalidate>
-              <h3>Register for an intro talk</h3>
-              <div class="form-grid">
-                <label>
-                  Full Name
-                  <input name="fullName" type="text" autocomplete="name" required minlength="2">
-                </label>
-                <label>
-                  Email
-                  <input name="email" type="email" autocomplete="email" required>
-                </label>
-                <label>
-                  Phone Number
-                  <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9+\-\s]{8,15}">
-                </label>
-                <label>
-                  City / State
-                  <input name="cityState" type="text" autocomplete="address-level2" required>
-                </label>
-                <label>
-                  Selected City Area
-                  <select name="cityArea" required>
-                    <option value="">Choose an option</option>
-                    <option>Salt Lake</option>
-                    <option>Online</option>
-                  </select>
-                </label>
-                <label>
-                  Preferred Date
-                  <select name="preferredDate" required>
-                    <option value="">Choose a date</option>
-                  </select>
-                </label>
-                <label>
-                  Age Group
-                  <select name="ageGroup">
-                    <option value="">Choose an option</option>
-                    <option>Under 18</option>
-                    <option>18-25</option>
-                    <option>26-35</option>
-                    <option>36-50</option>
-                    <option>51-65</option>
-                    <option>Above 65</option>
-                  </select>
-                </label>
-                <label>
-                  Occupation
-                  <select name="occupation">
-                    <option value="">Choose an option</option>
-                    <option>Student</option>
-                    <option>Working Professional</option>
-                    <option>Business Owner</option>
-                    <option>Homemaker</option>
-                    <option>Teacher</option>
-                    <option>Healthcare Professional</option>
-                    <option>Retired</option>
-                    <option>Other</option>
-                  </select>
-                </label>
-                <label>
-                  How did you hear about this program?
-                  <select name="heardAbout">
-                    <option value="">Choose an option</option>
-                    <option>Facebook</option>
-                    <option>Instagram</option>
-                    <option>Google Search</option>
-                    <option>YouTube</option>
-                    <option>Friend/Family</option>
-                    <option>WhatsApp</option>
-                    <option>Other</option>
-                  </select>
-                </label>
-                <fieldset class="choice-group full-width">
-                  <legend>What motivated you to learn TM?</legend>
-                  <label><input name="motivation" type="checkbox" value="Reduce stress"> Reduce stress</label>
-                  <label><input name="motivation" type="checkbox" value="Better sleep"> Better sleep</label>
-                  <label><input name="motivation" type="checkbox" value="Anxiety management"> Anxiety management</label>
-                  <label><input name="motivation" type="checkbox" value="Improve focus and memory"> Improve focus and memory</label>
-                  <label><input name="motivation" type="checkbox" value="Better decision-making"> Better decision-making</label>
-                  <label><input name="motivation" type="checkbox" value="Better physical health"> Better physical health</label>
-                  <label><input name="motivation" type="checkbox" value="Emotional well-being"> Emotional well-being</label>
-                  <label><input name="motivation" type="checkbox" value="Spiritual growth"> Spiritual growth</label>
-                  <label><input name="motivation" type="checkbox" value="Personal development"> Personal development</label>
-                  <label><input name="motivation" type="checkbox" value="Curiosity"> Curiosity</label>
-                </fieldset>
-                <label>
-                  Prior Meditation Practice
-                  <select name="priorMeditation">
-                    <option value="">Choose an option</option>
-                    <option>No</option>
-                    <option>Yes, occasionally</option>
-                    <option>Yes, regularly</option>
-                  </select>
-                </label>
-                <label>
-                  If yes, which type?
-                  <input name="priorMeditationTypes" type="text">
-                </label>
-                <label class="full-width">
-                  Biggest current challenge
-                  <textarea name="currentChallenge" rows="3"></textarea>
-                </label>
-                <label>
-                  Current Stress Level
-                  <select name="stressLevel">
-                    <option value="">Choose 1-10</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                  </select>
-                </label>
-                <label>
-                  Commitment to twice-daily practice
-                  <select name="practiceCommitment">
-                    <option value="">Choose an option</option>
-                    <option>Very committed</option>
-                    <option>Probably committed</option>
-                    <option>Unsure</option>
-                  </select>
-                </label>
-                <label>
-                  Best time to contact you
-                  <select name="bestContactTime">
-                    <option value="">Choose an option</option>
-                    <option>Morning</option>
-                    <option>Afternoon</option>
-                    <option>Evening</option>
-                  </select>
-                </label>
-                <label>
-                  Receive future updates?
-                  <select name="futureUpdates">
-                    <option value="">Choose an option</option>
-                    <option>Yes</option>
-                    <option>No</option>
-                  </select>
-                </label>
-                <label class="full-width">
-                  Questions before the intro session
-                  <textarea name="preSessionQuestions" rows="3"></textarea>
-                </label>
+      <section id="events" class="section-block event-band conversion-hub">
+        <div class="section-shell">
+          <div class="section-heading centered">
+            <p class="eyebrow">Kolkata Intro Sessions &amp; Registration</p>
+            <h2>Reserve your free introductory talk.</h2>
+            <p>Choose Salt Lake or Online, then complete the form so the Kolkata team can confirm your session details.</p>
+          </div>
+          <div class="conversion-layout">
+            <div>
+              <div id="event-grid" class="event-grid" aria-label="Upcoming introductory talks">
+                <p class="event-empty">Loading upcoming TM Kolkata sessions...</p>
               </div>
-              <button class="button primary full-width" type="submit">Submit Registration</button>
-              <p class="form-message" role="status" aria-live="polite"></p>
-            </form>
-          </details>
+              <div class="conversion-note">
+                <strong>What happens next?</strong>
+                <span>You will receive confirmation by phone or email, with the session link or Salt Lake details.</span>
+              </div>
+            </div>
+            <article class="registration-panel" id="registration">
+              <div class="form-heading">
+                <p class="eyebrow">Register Free</p>
+                <h3>Tell us where to reach you.</h3>
+                <p>Required fields help us reserve your place. Optional answers help the teacher guide the conversation.</p>
+              </div>
+              <form class="form-panel" novalidate>
+                <div class="form-grid">
+                  <label>
+                    Full Name
+                    <input name="fullName" type="text" autocomplete="name" required minlength="2">
+                  </label>
+                  <label>
+                    Email
+                    <input name="email" type="email" autocomplete="email" required>
+                  </label>
+                  <label>
+                    Phone Number
+                    <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9+\-\s]{8,15}">
+                  </label>
+                  <label>
+                    City / State
+                    <input name="cityState" type="text" autocomplete="address-level2" required>
+                  </label>
+                  <label>
+                    Selected City Area
+                    <select name="cityArea" required>
+                      <option value="">Choose an option</option>
+                      <option>Salt Lake</option>
+                      <option>Online</option>
+                    </select>
+                  </label>
+                  <label>
+                    Preferred Date
+                    <select name="preferredDate" required>
+                      <option value="">Choose a date</option>
+                    </select>
+                  </label>
+                  <label>
+                    Age Group
+                    <select name="ageGroup">
+                      <option value="">Choose an option</option>
+                      <option>Under 18</option>
+                      <option>18-25</option>
+                      <option>26-35</option>
+                      <option>36-50</option>
+                      <option>51-65</option>
+                      <option>Above 65</option>
+                    </select>
+                  </label>
+                  <label>
+                    Occupation
+                    <select name="occupation">
+                      <option value="">Choose an option</option>
+                      <option>Student</option>
+                      <option>Working Professional</option>
+                      <option>Business Owner</option>
+                      <option>Homemaker</option>
+                      <option>Teacher</option>
+                      <option>Healthcare Professional</option>
+                      <option>Retired</option>
+                      <option>Other</option>
+                    </select>
+                  </label>
+                  <label>
+                    How did you hear about this program?
+                    <select name="heardAbout">
+                      <option value="">Choose an option</option>
+                      <option>Facebook</option>
+                      <option>Instagram</option>
+                      <option>Google Search</option>
+                      <option>YouTube</option>
+                      <option>Friend/Family</option>
+                      <option>WhatsApp</option>
+                      <option>Other</option>
+                    </select>
+                  </label>
+                  <fieldset class="choice-group full-width">
+                    <legend>What motivated you to learn TM?</legend>
+                    <label><input name="motivation" type="checkbox" value="Reduce stress"> Reduce stress</label>
+                    <label><input name="motivation" type="checkbox" value="Better sleep"> Better sleep</label>
+                    <label><input name="motivation" type="checkbox" value="Anxiety management"> Anxiety management</label>
+                    <label><input name="motivation" type="checkbox" value="Improve focus and memory"> Improve focus and memory</label>
+                    <label><input name="motivation" type="checkbox" value="Better decision-making"> Better decision-making</label>
+                    <label><input name="motivation" type="checkbox" value="Better physical health"> Better physical health</label>
+                    <label><input name="motivation" type="checkbox" value="Emotional well-being"> Emotional well-being</label>
+                    <label><input name="motivation" type="checkbox" value="Spiritual growth"> Spiritual growth</label>
+                    <label><input name="motivation" type="checkbox" value="Personal development"> Personal development</label>
+                    <label><input name="motivation" type="checkbox" value="Curiosity"> Curiosity</label>
+                  </fieldset>
+                  <label>
+                    Prior Meditation Practice
+                    <select name="priorMeditation">
+                      <option value="">Choose an option</option>
+                      <option>No</option>
+                      <option>Yes, occasionally</option>
+                      <option>Yes, regularly</option>
+                    </select>
+                  </label>
+                  <label>
+                    If yes, which type?
+                    <input name="priorMeditationTypes" type="text">
+                  </label>
+                  <label class="full-width">
+                    Biggest current challenge
+                    <textarea name="currentChallenge" rows="3"></textarea>
+                  </label>
+                  <label>
+                    Current Stress Level
+                    <select name="stressLevel">
+                      <option value="">Choose 1-10</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                    </select>
+                  </label>
+                  <label>
+                    Commitment to twice-daily practice
+                    <select name="practiceCommitment">
+                      <option value="">Choose an option</option>
+                      <option>Very committed</option>
+                      <option>Probably committed</option>
+                      <option>Unsure</option>
+                    </select>
+                  </label>
+                  <label>
+                    Best time to contact you
+                    <select name="bestContactTime">
+                      <option value="">Choose an option</option>
+                      <option>Morning</option>
+                      <option>Afternoon</option>
+                      <option>Evening</option>
+                    </select>
+                  </label>
+                  <label>
+                    Receive future updates?
+                    <select name="futureUpdates">
+                      <option value="">Choose an option</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </label>
+                  <label class="full-width">
+                    Questions before the intro session
+                    <textarea name="preSessionQuestions" rows="3"></textarea>
+                  </label>
+                </div>
+                <button class="button primary full-width" type="submit">Submit Registration</button>
+                <p class="form-message" role="status" aria-live="polite"></p>
+              </form>
+            </article>
+          </div>
+        </div>
+      </section>
 
+      <section class="section-block founder-band">
+        <div class="section-shell founder-layout">
+          <div class="portrait" aria-hidden="true">ॐ</div>
+          <div>
+            <p class="eyebrow">Founder's Legacy</p>
+            <h2>Maharishi Mahesh Yogi</h2>
+            <p>
+              Founder of Transcendental Meditation, Maharishi revived the natural,
+              effortless technique for modern life and trained teachers to preserve
+              its authentic personal instruction.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="meditators" class="section-block community-band">
+        <div class="section-shell community-layout">
+          <div>
+            <p class="eyebrow">For Current TM Practitioners</p>
+            <h2>Group Meditations &amp; Advanced Knowledge Sessions</h2>
+            <p>
+              A steady weekly rhythm for practitioners who want shared silence, checking,
+              and continued inspiration from the Maharishi Vedic tradition.
+            </p>
+          </div>
+          <div class="schedule-list">
+            <a href="#" aria-label="Join Sunday online group meditation">
+              <strong>Sunday online group meditation</strong>
+              <span>8:00 AM - Zoom link by WhatsApp group</span>
+            </a>
+            <a href="#" aria-label="View Salt Lake center meetup details">
+              <strong>Salt Lake center meetup</strong>
+              <span>First Saturday monthly - 5:00 PM</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="resources" class="section-block blog-section">
+        <div class="section-shell">
           <div class="heading-row blog-heading-row">
-            <h2>Helpful reading</h2>
+            <div>
+              <p class="eyebrow">Helpful Reading / Blogs</p>
+              <h2>Recent articles from India TM.</h2>
+            </div>
             <a class="section-link" href="https://www.indiatm.org/post" target="_blank" rel="noopener">
               More TM Blogs
             </a>
@@ -456,44 +505,6 @@
         </div>
       </section>
 
-      <section class="section-block founder-band">
-        <div class="section-shell founder-layout">
-          <div class="portrait" aria-hidden="true">ॐ</div>
-          <div>
-            <p class="eyebrow">Founder's Legacy</p>
-            <h2>Maharishi Mahesh Yogi</h2>
-            <p>
-              Founder of Transcendental Meditation, Maharishi revived the natural,
-              effortless technique for modern life and trained teachers to preserve
-              its authentic personal instruction.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="meditators" class="section-block community-band">
-        <div class="section-shell community-layout">
-          <div>
-            <p class="eyebrow">For Current TM Practitioners</p>
-            <h2>Group Meditations &amp; Advanced Knowledge Sessions</h2>
-            <p>
-              A steady weekly rhythm for practitioners who want shared silence, checking,
-              and continued inspiration from the Maharishi Vedic tradition.
-            </p>
-          </div>
-          <div class="schedule-list">
-            <a href="#" aria-label="Join Sunday online group meditation">
-              <strong>Sunday online group meditation</strong>
-              <span>8:00 AM - Zoom link by WhatsApp group</span>
-            </a>
-            <a href="#" aria-label="View Salt Lake center meetup details">
-              <strong>Salt Lake center meetup</strong>
-              <span>First Saturday monthly - 5:00 PM</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
       <section id="faqs" class="section-block faq-section">
         <div class="section-shell faq-layout">
           <div>
@@ -552,6 +563,7 @@
     <button class="whatsapp-float" type="button" data-open-question aria-label="Ask a question on WhatsApp">
       WhatsApp
     </button>
+    <a class="mobile-cta-bar" href="#registration">Book Free Session</a>
 
     <div id="question-modal" class="modal" aria-hidden="true">
       <div class="modal-backdrop" data-close-modal></div>

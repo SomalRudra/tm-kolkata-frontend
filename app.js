@@ -9,8 +9,8 @@ const siteNav = document.querySelector("#site-nav");
 const modal = document.querySelector("#question-modal");
 const openQuestionButtons = document.querySelectorAll("[data-open-question]");
 const closeModalButtons = document.querySelectorAll("[data-close-modal]");
-const registrationForm = document.querySelector("#registration");
-const registrationDetails = document.querySelector("#registration-details");
+const registrationSection = document.querySelector("#registration");
+const registrationForm = registrationSection.querySelector("form");
 const questionForm = document.querySelector("#question-form");
 const eventGrid = document.querySelector("#event-grid");
 const preferredDateSelect = registrationForm.elements.preferredDate;
@@ -222,9 +222,8 @@ function closeModal() {
 }
 
 function openRegistrationForm() {
-  if (registrationDetails) {
-    registrationDetails.open = true;
-  }
+  registrationSection.classList.add("is-highlighted");
+  window.setTimeout(() => registrationSection.classList.remove("is-highlighted"), 1400);
 }
 
 navToggle.addEventListener("click", () => {
@@ -265,7 +264,7 @@ eventGrid.addEventListener("click", (event) => {
     registrationForm.elements.cityArea.value = tmEvent.kolkata_region;
     preferredDateSelect.value = String(tmEvent.id);
     openRegistrationForm();
-    registrationForm.scrollIntoView({ behavior: "smooth", block: "center" });
+    registrationSection.scrollIntoView({ behavior: "smooth", block: "center" });
     setTimeout(() => registrationForm.elements.fullName.focus(), 500);
   }
 });
