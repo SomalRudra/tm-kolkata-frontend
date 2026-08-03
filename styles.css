@@ -442,31 +442,71 @@ details p {
 }
 
 .registration-panel {
-  margin-top: 28px;
+  margin-top: 42px;
+  border: 2px solid rgba(217, 154, 22, 0.45);
+  box-shadow: 0 24px 60px rgba(19, 40, 54, 0.13);
   scroll-margin-top: 110px;
 }
 
 .registration-panel summary {
   display: flex;
-  min-height: 72px;
+  min-height: 150px;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 22px clamp(22px, 4vw, 34px);
-  background: linear-gradient(135deg, rgba(215, 240, 236, 0.78), rgba(255, 255, 255, 0.8));
+  gap: 24px;
+  padding: clamp(28px, 5vw, 46px);
+  background:
+    linear-gradient(135deg, rgba(217, 154, 22, 0.2), rgba(215, 240, 236, 0.92)),
+    var(--surface);
 }
 
 .registration-panel summary span {
+  display: grid;
+  gap: 10px;
   color: var(--slate);
-  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 0.95;
   font-weight: 900;
 }
 
 .registration-panel summary small {
-  color: var(--teal-dark);
-  font-size: 0.86rem;
-  font-weight: 900;
+  max-width: 46rem;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.18rem);
+  font-weight: 800;
+  line-height: 1.45;
+  text-transform: none;
+}
+
+.registration-panel summary strong {
+  display: inline-grid;
+  min-width: 132px;
+  min-height: 48px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--slate);
+  color: white;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
+}
+
+.registration-panel[open] summary strong {
+  background: var(--teal-dark);
+}
+
+.registration-panel[open] summary strong::before {
+  content: "Close";
+}
+
+.registration-panel[open] summary strong {
+  font-size: 0;
+}
+
+.registration-panel[open] summary strong::before {
+  font-size: 0.9rem;
 }
 
 .registration-panel .form-panel {
@@ -1026,6 +1066,15 @@ details p {
 
   .form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .registration-panel summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .registration-panel summary strong {
+    width: 100%;
   }
 
   .choice-group {
