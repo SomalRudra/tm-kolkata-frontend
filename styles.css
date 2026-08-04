@@ -941,6 +941,22 @@ summary:focus-visible {
   color: #d7e8e6;
 }
 
+.founder-link {
+  margin-top: 18px;
+}
+
+.founder-link a {
+  color: #f5dfad;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.founder-link a:hover {
+  color: white;
+}
+
 .community-band {
   background: var(--slate);
   color: white;
