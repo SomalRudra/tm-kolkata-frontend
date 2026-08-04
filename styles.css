@@ -85,13 +85,15 @@ a {
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, var(--teal), var(--blue));
-  color: white;
-  font-family: var(--font-heading);
-  font-weight: 700;
+  width: 92px;
+  height: 92px;
+  flex: 0 0 auto;
+}
+
+.brand-mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .brand strong,
@@ -183,6 +185,24 @@ a {
 .section-shell {
   width: min(1160px, calc(100% - 36px));
   margin: 0 auto;
+}
+
+.registration-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 58px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--gold), #e8a63c);
+  color: white;
+  font: inherit;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 16px 32px rgba(180, 83, 9, 0.24);
 }
 
 .section-block {
@@ -510,6 +530,10 @@ details p {
   scroll-margin-top: 110px;
 }
 
+.registration-panel:not(.is-open) .form-panel {
+  display: none;
+}
+
 .registration-panel::before {
   content: "";
   position: absolute;
@@ -535,6 +559,10 @@ details p {
 
 .form-heading {
   padding: clamp(28px, 4vw, 38px) clamp(24px, 4vw, 34px) 0;
+}
+
+.registration-panel.is-open .form-heading {
+  padding-bottom: 6px;
 }
 
 .form-heading h3 {
@@ -1144,6 +1172,20 @@ summary:focus-visible {
     width: 100%;
   }
 
+  .brand {
+    gap: 10px;
+  }
+
+  .brand-mark {
+    width: 74px;
+    height: 74px;
+  }
+
+  .brand strong {
+    font-size: 0.92rem;
+    line-height: 1.15;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
   }
@@ -1155,6 +1197,19 @@ summary:focus-visible {
   .heading-row,
   .founder-layout {
     display: grid;
+  }
+
+  .testimonial-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .testimonial-card {
+    flex: 0 0 min(86%, 360px);
+    scroll-snap-align: start;
   }
 
   .site-footer {

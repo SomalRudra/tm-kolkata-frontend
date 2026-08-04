@@ -1,5 +1,5 @@
 const WHATSAPP_NUMBER = "918981887910";
-const WHATSAPP_BASE_TEXT = "Hi, I have a question about TM Kolkata";
+const WHATSAPP_BASE_TEXT = "Hi, I have a question about Transcendental Meditation Kolkata";
 const CLIENT_SITE_URL = "https://tmkolkata.org/";
 const ANALYTICS_FUNNEL_URL = window.TM_KOLKATA_ANALYTICS_URL || "https://analytics.tmkolkata.org/";
 const API_BASE_URL = window.TM_KOLKATA_API_URL || "https://tm-kolkata-backend-production.up.railway.app";
@@ -11,6 +11,7 @@ const openQuestionButtons = document.querySelectorAll("[data-open-question]");
 const closeModalButtons = document.querySelectorAll("[data-close-modal]");
 const registrationSection = document.querySelector("#registration");
 const registrationForm = registrationSection.querySelector("form");
+const registrationToggle = document.querySelector("[data-toggle-registration]");
 const questionForm = document.querySelector("#question-form");
 const eventGrid = document.querySelector("#event-grid");
 const preferredDateSelect = registrationForm.elements.preferredDate;
@@ -137,6 +138,22 @@ function formatEventTime(value) {
   }).format(new Date(value));
 }
 
+function getDisplayRegion(region) {
+  return region === "Salt Lake" ? "Bhadreswar" : region;
+}
+
+function getEventModeLabel(event) {
+  return event.event_mode === "Virtual"
+    ? "Online | Zoom"
+    : `In-Person | ${getDisplayRegion(event.kolkata_region)}`;
+}
+
+function getEventTimingLabel(event) {
+  return event.event_mode === "Virtual"
+    ? "Friday 8:30 pm IST"
+    : formatEventTime(event.event_date);
+}
+
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (character) => ({
     "&": "&amp;",
@@ -148,7 +165,7 @@ function escapeHtml(value) {
 }
 
 function eventLabel(event) {
-  return `${formatEventDate(event.event_date)} - ${event.kolkata_region}`;
+  return `${formatEventDate(event.event_date)} - ${getDisplayRegion(event.kolkata_region)}`;
 }
 
 function renderEvents(events) {
@@ -171,14 +188,14 @@ function renderEvents(events) {
     card.className = "event-card";
     card.innerHTML = `
       <span class="type-tag ${tmEvent.event_mode === "Virtual" ? "online" : ""}">
-        ${escapeHtml(tmEvent.event_mode)} | ${escapeHtml(tmEvent.kolkata_region)}
+        ${escapeHtml(getEventModeLabel(tmEvent))}
       </span>
       <h3>${escapeHtml(tmEvent.title)}</h3>
       <div class="event-time">
         <strong>${formatEventDate(tmEvent.event_date)}</strong>
-        <span>${formatEventTime(tmEvent.event_date)}</span>
+        <span>${escapeHtml(getEventTimingLabel(tmEvent))}</span>
       </div>
-      <p>${escapeHtml(tmEvent.venue)}</p>
+      <p>${escapeHtml(tmEvent.event_mode === "Virtual" ? "Zoom intro session" : tmEvent.venue)}</p>
       ${tmEvent.description ? `<p>${escapeHtml(tmEvent.description)}</p>` : ""}
       <button class="button primary reserve-button" type="button" data-event-id="${tmEvent.id}">
         Reserve Seat
@@ -221,10 +238,28 @@ function closeModal() {
   document.body.classList.remove("modal-open");
 }
 
-function openRegistrationForm() {
+function setRegistrationOpen(isOpen) {
+  registrationSection.classList.toggle("is-open", isOpen);
+  registrationForm.hidden = !isOpen;
+  if (registrationToggle) {
+    registrationToggle.setAttribute("aria-expanded", String(isOpen));
+    registrationToggle.textContent = isOpen ? "Hide Registration Form" : "Register Free For TM Course";
+  }
+}
+
+function openRegistrationForm({ scroll = true, focusFirstField = false } = {}) {
+  setRegistrationOpen(true);
   registrationSection.classList.add("is-highlighted");
   window.setTimeout(() => registrationSection.classList.remove("is-highlighted"), 1400);
+  if (scroll) {
+    registrationSection.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  if (focusFirstField) {
+    window.setTimeout(() => registrationForm.elements.fullName.focus(), 350);
+  }
 }
+
+setRegistrationOpen(false);
 
 navToggle.addEventListener("click", () => {
   const isOpen = siteNav.classList.toggle("is-open");
@@ -242,10 +277,22 @@ openQuestionButtons.forEach((button) => button.addEventListener("click", openMod
 closeModalButtons.forEach((button) => button.addEventListener("click", closeModal));
 
 document.querySelectorAll('a[href="#registration"]').forEach((link) => {
-  link.addEventListener("click", () => {
-    openRegistrationForm();
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    openRegistrationForm({ scroll: true, focusFirstField: true });
   });
 });
+
+if (registrationToggle) {
+  registrationToggle.addEventListener("click", () => {
+    const isOpen = registrationSection.classList.contains("is-open");
+    setRegistrationOpen(!isOpen);
+    if (!isOpen) {
+      registrationSection.scrollIntoView({ behavior: "smooth", block: "center" });
+      window.setTimeout(() => registrationForm.elements.fullName.focus(), 350);
+    }
+  });
+}
 
 eventGrid.addEventListener("click", (event) => {
   const button = event.target.closest("[data-event-id]");
@@ -257,15 +304,15 @@ eventGrid.addEventListener("click", (event) => {
   if (tmEvent) {
     trackAnalyticsFunnel("reserve_seat_clicked", {
       event_id: tmEvent.id,
-      kolkata_region: tmEvent.kolkata_region,
+      kolkata_region: getDisplayRegion(tmEvent.kolkata_region),
       event_date: tmEvent.event_date,
       event_mode: tmEvent.event_mode
     });
-    registrationForm.elements.cityArea.value = tmEvent.kolkata_region;
+    registrationForm.elements.cityArea.value = tmEvent.event_mode === "Virtual"
+      ? "Online"
+      : getDisplayRegion(tmEvent.kolkata_region);
     preferredDateSelect.value = String(tmEvent.id);
-    openRegistrationForm();
-    registrationSection.scrollIntoView({ behavior: "smooth", block: "center" });
-    setTimeout(() => registrationForm.elements.fullName.focus(), 500);
+    openRegistrationForm({ scroll: true, focusFirstField: true });
   }
 });
 
@@ -296,7 +343,7 @@ registrationForm.addEventListener("submit", async (event) => {
     email: payload.email,
     phone: payload.phone,
     city_state: payload.cityState,
-    kolkata_region: selectedEvent.kolkata_region,
+    kolkata_region: getDisplayRegion(selectedEvent.kolkata_region),
     event_date: selectedEvent.event_date,
     event_mode: selectedEvent.event_mode,
     bucket: "BUCKET_B_REGISTERED",
@@ -320,6 +367,7 @@ registrationForm.addEventListener("submit", async (event) => {
   await postIfConfigured("/api/leads/register", registrationPayload);
 
   registrationForm.reset();
+  setRegistrationOpen(false);
   setMessage(registrationForm, "Thank you. Your intro talk registration has been received.");
 });
 
