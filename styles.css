@@ -236,7 +236,7 @@ a {
   letter-spacing: 0.01em;
   cursor: pointer;
   box-shadow: 0 16px 32px rgba(180, 83, 9, 0.24);
-  margin-bottom: 26px;
+  margin-bottom: 32px;
 }
 
 .section-block {
@@ -596,11 +596,11 @@ details p {
 }
 
 .form-heading {
-  padding: clamp(36px, 5vw, 54px) clamp(30px, 4vw, 44px) 18px;
+  padding: clamp(40px, 5vw, 58px) clamp(32px, 4vw, 48px) 24px;
 }
 
 .registration-panel.is-open .form-heading {
-  padding-bottom: 18px;
+  padding-bottom: 24px;
 }
 
 .form-heading h3 {
@@ -608,6 +608,7 @@ details p {
   font-size: clamp(1.9rem, 3vw, 2.65rem);
   line-height: 1.06;
   margin-top: 0;
+  margin-bottom: 8px;
 }
 
 .form-heading p:not(.eyebrow) {
