@@ -104,11 +104,11 @@ button {
 }
 
 .site-header.is-scrolled {
-  background-color: #fff;
-  border-bottom: 1px solid #e5e7eb;
+  background: rgba(15, 23, 42, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  color: var(--ink);
-  backdrop-filter: blur(12px);
+  color: #fff;
+  backdrop-filter: blur(8px);
   min-height: 88px;
 }
 
@@ -129,29 +129,34 @@ button {
 }
 
 .brand {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   width: auto;
   flex: 0 0 auto;
   max-height: 84px;
   overflow: visible;
 }
 
-.brand-mark {
-  width: 66px;
-  height: 30px;
+.header-logo {
+  height: 40px;
+  width: auto;
+  display: block;
   object-fit: contain;
-  margin-right: 0;
-  filter: brightness(0) invert(1);
-  transition: filter 0.3s ease;
+  filter: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
-.brand-line {
-  display: block;
-  line-height: 1;
-  text-decoration: none;
+.brand-line-top {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.05;
+  padding-left: 4px;
 }
 
 .brand-line-sub {
@@ -255,15 +260,20 @@ button {
   font-weight: 600;
 }
 
-.site-header.is-scrolled .brand-line-top,
 .site-header.is-scrolled .site-nav,
 .site-header.is-scrolled .phone-link {
-  color: var(--navy);
+  color: #0f172a;
   text-shadow: none;
 }
 
-.site-header.is-scrolled .brand-mark {
-  filter: brightness(0) saturate(100%) invert(14%) sepia(31%) saturate(1753%) hue-rotate(204deg) brightness(86%) contrast(94%);
+.site-header.is-scrolled .brand-line-top {
+  color: #fff;
+  text-shadow: none;
+}
+
+.site-header.is-scrolled .header-logo {
+  filter: none;
+  opacity: 1;
 }
 
 .site-header.is-scrolled .nav-cta {
@@ -419,19 +429,20 @@ p {
   text-align: center;
 }
 
-.regional-badge {
+.hero-regional-tag {
   display: inline-flex;
   align-items: center;
   min-height: 34px;
-  margin-bottom: 18px;
-  padding: 0.35rem 1rem;
-  border: 1px solid rgba(217, 119, 6, 0.4);
-  border-radius: 9999px;
-  background: rgba(217, 119, 6, 0.15);
-  color: #f59e0b;
-  font-size: 0.78rem;
+  margin-bottom: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #f5b00b;
+  font-size: 0.85rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
 .trust-strip {
