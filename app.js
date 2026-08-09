@@ -2,20 +2,67 @@ const WHATSAPP_NUMBER = "918981887910";
 const WHATSAPP_BASE_TEXT = "Hi, I have a question about Transcendental Meditation Kolkata";
 const CLIENT_SITE_URL = "https://tmkolkata.org/";
 const ANALYTICS_FUNNEL_URL = window.TM_KOLKATA_ANALYTICS_URL || "https://analytics.tmkolkata.org/";
+const EVENT_FEED_URL = window.TM_KOLKATA_EVENTS_URL || ANALYTICS_FUNNEL_URL;
 const API_BASE_URL = window.TM_KOLKATA_API_URL || "https://tm-kolkata-backend-production.up.railway.app";
 
 const navToggle = document.querySelector(".nav-toggle");
 const siteNav = document.querySelector("#site-nav");
+const siteHeader = document.querySelector(".site-header");
 const modal = document.querySelector("#question-modal");
+const videoModal = document.querySelector("#video-modal");
 const openQuestionButtons = document.querySelectorAll("[data-open-question]");
 const closeModalButtons = document.querySelectorAll("[data-close-modal]");
+const openVideoButtons = document.querySelectorAll("[data-open-video]");
+const closeVideoButtons = document.querySelectorAll("[data-close-video]");
 const registrationSection = document.querySelector("#registration");
 const registrationForm = registrationSection.querySelector("form");
 const registrationToggle = document.querySelector("[data-toggle-registration]");
 const questionForm = document.querySelector("#question-form");
 const eventGrid = document.querySelector("#event-grid");
 const preferredDateSelect = registrationForm.elements.preferredDate;
+const tabButtons = document.querySelectorAll("[role='tab'][data-tab]");
+const tabPanels = document.querySelectorAll("[role='tabpanel'][data-panel]");
+const testimonials = document.querySelectorAll(".testimonial-card");
+const carouselPrev = document.querySelector("[data-carousel-prev]");
+const carouselNext = document.querySelector("[data-carousel-next]");
+const navLinks = document.querySelectorAll(".site-nav a[href^='#']");
+const spySections = Array.from(navLinks)
+  .map((link) => document.querySelector(link.getAttribute("href")))
+  .filter(Boolean);
 let publishedEvents = [];
+let testimonialIndex = 0;
+let testimonialTimer = null;
+
+function getNextWeekdayDate(targetWeekday, hour, minute) {
+  const date = new Date();
+  const daysUntilTarget = (targetWeekday + 7 - date.getDay()) % 7 || 7;
+  date.setDate(date.getDate() + daysUntilTarget);
+  date.setHours(hour, minute, 0, 0);
+  return date.toISOString();
+}
+
+function getFallbackEvents() {
+  return [
+    {
+      id: "fallback-bhadreswar",
+      title: "Bhadreswar Center Introductory Session",
+      event_mode: "In-Person",
+      kolkata_region: "Bhadreswar",
+      event_date: getNextWeekdayDate(6, 17, 0),
+      venue: "Bhadreswar Center | Active In-Person Center",
+      description: "A free introductory talk at the local TM center."
+    },
+    {
+      id: "fallback-online",
+      title: "Online Zoom Intro Session",
+      event_mode: "Virtual",
+      kolkata_region: "Online",
+      event_date: getNextWeekdayDate(5, 20, 30),
+      venue: "Online Zoom",
+      description: "Upcoming Friday 8:30 PM IST."
+    }
+  ];
+}
 
 function getTrafficAttribution() {
   const params = new URLSearchParams(window.location.search);
@@ -165,20 +212,24 @@ function escapeHtml(value) {
 }
 
 function eventLabel(event) {
+  if (String(event.id).startsWith("fallback-online")) {
+    return "Online Zoom Intro Session - Upcoming Friday 8:30 PM IST";
+  }
+
+  if (String(event.id).startsWith("fallback-bhadreswar")) {
+    return "Bhadreswar Center | Active In-Person Center";
+  }
+
   return `${formatEventDate(event.event_date)} - ${getDisplayRegion(event.kolkata_region)}`;
 }
 
 function renderEvents(events) {
-  publishedEvents = events;
+  const sessions = events.length ? events : getFallbackEvents();
+  publishedEvents = sessions;
   eventGrid.innerHTML = "";
   preferredDateSelect.innerHTML = '<option value="">Choose a date</option>';
 
-  if (!events.length) {
-    eventGrid.innerHTML = '<p class="event-empty">No upcoming sessions are open for registration right now.</p>';
-    return;
-  }
-
-  events.forEach((tmEvent) => {
+  sessions.forEach((tmEvent) => {
     const option = document.createElement("option");
     option.value = String(tmEvent.id);
     option.textContent = eventLabel(tmEvent);
@@ -195,7 +246,7 @@ function renderEvents(events) {
         <strong>${formatEventDate(tmEvent.event_date)}</strong>
         <span>${escapeHtml(getEventTimingLabel(tmEvent))}</span>
       </div>
-      <p>${escapeHtml(tmEvent.event_mode === "Virtual" ? "Zoom intro session" : tmEvent.venue)}</p>
+      <p>${escapeHtml(tmEvent.event_mode === "Virtual" ? "Live Online Zoom Session (Serving Kolkata &amp; WB)" : tmEvent.venue)}</p>
       ${tmEvent.description ? `<p>${escapeHtml(tmEvent.description)}</p>` : ""}
       <button class="button primary reserve-button" type="button" data-event-id="${tmEvent.id}">
         Reserve Seat
@@ -207,10 +258,20 @@ function renderEvents(events) {
 
 async function loadEvents() {
   try {
-    renderEvents(await fetchJson("/api/events"));
+    const response = await fetch(`${EVENT_FEED_URL.replace(/\/$/, "")}/api/events`);
+    if (!response.ok) {
+      throw new Error(`TM Kolkata event feed returned ${response.status}`);
+    }
+    const events = await response.json();
+    renderEvents(Array.isArray(events) ? events : []);
   } catch (error) {
-    console.warn("TM Kolkata event feed failed", error);
-    renderEvents([]);
+    try {
+      const fallbackEvents = await fetchJson("/api/events");
+      renderEvents(Array.isArray(fallbackEvents) ? fallbackEvents : []);
+    } catch (fallbackError) {
+      console.warn("TM Kolkata event feed failed", error, fallbackError);
+      renderEvents([]);
+    }
   }
 }
 
@@ -238,6 +299,17 @@ function closeModal() {
   document.body.classList.remove("modal-open");
 }
 
+function openVideoModal() {
+  videoModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+  videoModal.querySelector(".modal-close").focus();
+}
+
+function closeVideoModal() {
+  videoModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+}
+
 function setRegistrationOpen(isOpen) {
   registrationSection.classList.toggle("is-open", isOpen);
   registrationForm.hidden = !isOpen;
@@ -260,21 +332,162 @@ function openRegistrationForm({ scroll = true, focusFirstField = false } = {}) {
 }
 
 setRegistrationOpen(false);
+activateTab("stress");
+showTestimonial(0);
+
+function updateHeaderState() {
+  siteHeader.classList.toggle("is-scrolled", window.scrollY > 50);
+}
+
+function updateActiveNavLink() {
+  const marker = window.innerHeight * 0.35;
+  let activeHref = "";
+
+  spySections.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= marker && rect.bottom > marker) {
+      activeHref = `#${section.id}`;
+    }
+  });
+
+  navLinks.forEach((link) => {
+    const isActive = link.getAttribute("href") === activeHref;
+    link.classList.toggle("is-active", isActive);
+  });
+}
+
+function setMobileMenuOpen(isOpen) {
+  siteNav.classList.toggle("is-open", isOpen);
+  navToggle.setAttribute("aria-expanded", String(isOpen));
+  document.body.style.overflow = isOpen ? "hidden" : "";
+}
+
+function closeMobileMenu() {
+  setMobileMenuOpen(false);
+}
+
+function activateTab(tabName) {
+  tabButtons.forEach((button) => {
+    const isActive = button.dataset.tab === tabName;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-selected", String(isActive));
+  });
+
+  tabPanels.forEach((panel) => {
+    const isActive = panel.dataset.panel === tabName;
+    panel.classList.toggle("is-active", isActive);
+    panel.hidden = !isActive;
+  });
+}
+
+function showTestimonial(nextIndex) {
+  if (!testimonials.length) {
+    return;
+  }
+
+  testimonialIndex = (nextIndex + testimonials.length) % testimonials.length;
+  testimonials.forEach((card, index) => {
+    card.classList.toggle("is-active", index === testimonialIndex);
+  });
+}
+
+function startTestimonialAutoplay() {
+  if (testimonialTimer || testimonials.length < 2) {
+    return;
+  }
+
+  testimonialTimer = window.setInterval(() => {
+    showTestimonial(testimonialIndex + 1);
+  }, 5000);
+}
+
+function resetTestimonialAutoplay() {
+  if (testimonialTimer) {
+    window.clearInterval(testimonialTimer);
+    testimonialTimer = null;
+  }
+  startTestimonialAutoplay();
+}
 
 navToggle.addEventListener("click", () => {
-  const isOpen = siteNav.classList.toggle("is-open");
-  navToggle.setAttribute("aria-expanded", String(isOpen));
+  const isOpen = !siteNav.classList.contains("is-open");
+  setMobileMenuOpen(isOpen);
 });
+
+window.addEventListener("scroll", updateHeaderState, { passive: true });
+window.addEventListener("scroll", updateActiveNavLink, { passive: true });
+updateHeaderState();
+updateActiveNavLink();
 
 siteNav.addEventListener("click", (event) => {
   if (event.target.matches("a")) {
-    siteNav.classList.remove("is-open");
-    navToggle.setAttribute("aria-expanded", "false");
+    closeMobileMenu();
+  }
+});
+
+document.addEventListener("click", (event) => {
+  if (!siteNav.classList.contains("is-open")) {
+    return;
+  }
+
+  if (siteNav.contains(event.target) || navToggle.contains(event.target)) {
+    return;
+  }
+
+  closeMobileMenu();
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth >= 992) {
+    closeMobileMenu();
   }
 });
 
 openQuestionButtons.forEach((button) => button.addEventListener("click", openModal));
 closeModalButtons.forEach((button) => button.addEventListener("click", closeModal));
+openVideoButtons.forEach((button) => button.addEventListener("click", openVideoModal));
+closeVideoButtons.forEach((button) => button.addEventListener("click", closeVideoModal));
+
+tabButtons.forEach((button) => {
+  button.addEventListener("click", () => activateTab(button.dataset.tab));
+});
+
+const benefitTabList = document.querySelector(".benefit-tabs [role='tablist']");
+if (benefitTabList) {
+  benefitTabList.addEventListener("click", (event) => {
+    const tab = event.target.closest("[role='tab'][data-tab]");
+    if (tab) {
+      activateTab(tab.dataset.tab);
+    }
+  });
+}
+
+document.querySelectorAll(".accordion details").forEach((details) => {
+  details.addEventListener("toggle", () => {
+    if (!details.open) {
+      return;
+    }
+
+    document.querySelectorAll(".accordion details").forEach((otherDetails) => {
+      if (otherDetails !== details) {
+        otherDetails.open = false;
+      }
+    });
+  });
+});
+
+if (carouselPrev && carouselNext) {
+  carouselPrev.addEventListener("click", () => {
+    showTestimonial(testimonialIndex - 1);
+    resetTestimonialAutoplay();
+  });
+  carouselNext.addEventListener("click", () => {
+    showTestimonial(testimonialIndex + 1);
+    resetTestimonialAutoplay();
+  });
+}
+
+startTestimonialAutoplay();
 
 document.querySelectorAll('a[href="#registration"]').forEach((link) => {
   link.addEventListener("click", (event) => {
@@ -317,8 +530,14 @@ eventGrid.addEventListener("click", (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && siteNav.classList.contains("is-open")) {
+    closeMobileMenu();
+  }
   if (event.key === "Escape" && modal.getAttribute("aria-hidden") === "false") {
     closeModal();
+  }
+  if (event.key === "Escape" && videoModal.getAttribute("aria-hidden") === "false") {
+    closeVideoModal();
   }
 });
 
