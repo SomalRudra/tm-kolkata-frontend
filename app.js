@@ -6,7 +6,7 @@ const EVENT_FEED_URL = window.TM_KOLKATA_EVENTS_URL || ANALYTICS_FUNNEL_URL;
 const API_BASE_URL = window.TM_KOLKATA_API_URL || "https://tm-kolkata-backend-production.up.railway.app";
 
 const navToggle = document.querySelector(".nav-toggle");
-const siteNav = document.querySelector("#site-nav");
+const siteNav = document.querySelector("#mobile-menu");
 const siteHeader = document.querySelector(".site-header");
 const modal = document.querySelector("#question-modal");
 const videoModal = document.querySelector("#video-modal");
@@ -419,11 +419,13 @@ window.addEventListener("scroll", updateActiveNavLink, { passive: true });
 updateHeaderState();
 updateActiveNavLink();
 
-siteNav.addEventListener("click", (event) => {
-  if (event.target.matches("a")) {
-    closeMobileMenu();
-  }
-});
+if (siteNav) {
+  siteNav.addEventListener("click", (event) => {
+    if (event.target.matches("a")) {
+      closeMobileMenu();
+    }
+  });
+}
 
 document.addEventListener("click", (event) => {
   if (!siteNav.classList.contains("is-open")) {
@@ -477,13 +479,36 @@ document.querySelectorAll(".accordion details").forEach((details) => {
 });
 
 if (carouselPrev && carouselNext) {
-  carouselPrev.addEventListener("click", () => {
-    showTestimonial(testimonialIndex - 1);
+  const stepTestimonial = (direction) => {
+    showTestimonial(testimonialIndex + direction);
     resetTestimonialAutoplay();
+  };
+
+  carouselPrev.addEventListener("click", () => {
+    stepTestimonial(-1);
   });
   carouselNext.addEventListener("click", () => {
-    showTestimonial(testimonialIndex + 1);
-    resetTestimonialAutoplay();
+    stepTestimonial(1);
+  });
+
+  document.addEventListener("click", (event) => {
+    const prevButton = event.target.closest("[data-carousel-prev]");
+    const nextButton = event.target.closest("[data-carousel-next]");
+    if (prevButton) {
+      stepTestimonial(-1);
+    }
+    if (nextButton) {
+      stepTestimonial(1);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft" && document.activeElement && document.activeElement.closest(".testimonial-section")) {
+      stepTestimonial(-1);
+    }
+    if (event.key === "ArrowRight" && document.activeElement && document.activeElement.closest(".testimonial-section")) {
+      stepTestimonial(1);
+    }
   });
 }
 
