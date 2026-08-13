@@ -262,7 +262,7 @@ button {
 
 .site-header.is-scrolled .site-nav,
 .site-header.is-scrolled .phone-link {
-  color: #0f172a;
+  color: #fff;
   text-shadow: none;
 }
 
@@ -274,6 +274,10 @@ button {
 .site-header.is-scrolled .header-logo {
   filter: none;
   opacity: 1;
+}
+
+.site-header.is-scrolled .site-nav a.is-active {
+  color: #fff;
 }
 
 .site-header.is-scrolled .nav-cta {
@@ -477,6 +481,58 @@ p {
 .trust-strip span {
   color: rgba(255, 255, 255, 0.82);
   font-size: 0.88rem;
+}
+
+.unique-heading {
+  margin: 10px 0 14px;
+  display: inline-block;
+  background: linear-gradient(135deg, #ffffff 0%, #f1c40f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.unique-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(1020px, 100%);
+}
+
+.unique-grid div {
+  position: relative;
+  min-height: 158px;
+  align-content: start;
+  gap: 10px;
+  padding: 22px 24px;
+  text-align: left;
+}
+
+.unique-grid div + div {
+  border-left: 0;
+}
+
+.unique-grid div:nth-child(2n) {
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.unique-grid div:nth-child(n + 3) {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.unique-grid .unique-number {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(245, 176, 0, 0.52);
+  border-radius: 50%;
+  color: #f5b00b;
+  font-size: 0.8rem;
+  font-weight: 800;
 }
 
 .hero-actions,
@@ -720,12 +776,20 @@ p {
 .teacher-panel {
   overflow: hidden;
   background: var(--ivory);
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 18px;
+  padding: clamp(28px, 4vw, 48px);
+  text-align: center;
 }
 
 .teacher-panel img {
-  width: 100%;
-  aspect-ratio: 0.92 / 1;
+  width: min(220px, 70%);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
   object-fit: cover;
+  box-shadow: 0 18px 42px rgba(11, 27, 61, 0.14);
 }
 
 .teacher-panel div,
@@ -733,8 +797,12 @@ p {
   padding: clamp(26px, 4vw, 38px);
 }
 
+.teacher-panel div {
+  padding-top: 0;
+}
+
 .teacher-panel h2 {
-  margin: 8px 0 16px;
+  margin: 0 0 16px;
   font-family: var(--font-heading);
   font-size: clamp(2.9rem, 5vw, 4.8rem);
   line-height: 0.92;
@@ -1105,16 +1173,17 @@ textarea {
 
 .founder-layout {
   display: grid;
-  grid-template-columns: auto minmax(0, 760px);
-  gap: 24px;
+  grid-template-columns: minmax(236px, 0.42fr) minmax(0, 760px);
+  gap: clamp(28px, 5vw, 56px);
   align-items: center;
 }
 
 .founder-image {
-  width: 118px;
-  height: 118px;
+  width: 236px;
+  height: 236px;
   border-radius: 50%;
   object-fit: cover;
+  justify-self: center;
 }
 
 .founder-layout p {
@@ -1377,6 +1446,7 @@ textarea {
 
   .intro-grid,
   .benefit-tabs,
+  .unique-grid,
   .roadmap,
   .trust-layout,
   .fee-panel,
@@ -1387,6 +1457,14 @@ textarea {
 
   .roadmap::before {
     display: none;
+  }
+
+  .unique-grid div:nth-child(2n) {
+    border-left: 0;
+  }
+
+  .unique-grid div + div {
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
   }
 
   .question-panel {
