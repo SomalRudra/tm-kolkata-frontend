@@ -54,11 +54,11 @@ function getFallbackEvents() {
     },
     {
       id: "fallback-online",
-      title: "Online Zoom Intro Session",
+      title: "Online Intro Session",
       event_mode: "Virtual",
       kolkata_region: "Online",
       event_date: getNextWeekdayDate(5, 20, 30),
-      venue: "Online Zoom",
+      venue: "Online",
       description: "Upcoming Friday 8:30 PM IST."
     }
   ];
@@ -191,7 +191,7 @@ function getDisplayRegion(region) {
 
 function getEventModeLabel(event) {
   return event.event_mode === "Virtual"
-    ? "Online | Zoom"
+    ? "Online | Live"
     : `In-Person | ${getDisplayRegion(event.kolkata_region)}`;
 }
 
@@ -213,7 +213,7 @@ function escapeHtml(value) {
 
 function eventLabel(event) {
   if (String(event.id).startsWith("fallback-online")) {
-    return "Online Zoom Intro Session - Upcoming Friday 8:30 PM IST";
+    return "Online Intro Session - Upcoming Friday 8:30 PM IST";
   }
 
   if (String(event.id).startsWith("fallback-bhadreswar")) {
@@ -237,6 +237,9 @@ function renderEvents(events) {
 
     const card = document.createElement("article");
     card.className = "event-card";
+    const venueDesc = tmEvent.description
+      ? `${tmEvent.venue} | ${tmEvent.description}`
+      : tmEvent.venue;
     card.innerHTML = `
       <span class="type-tag ${tmEvent.event_mode === "Virtual" ? "online" : ""}">
         ${escapeHtml(getEventModeLabel(tmEvent))}
@@ -246,8 +249,7 @@ function renderEvents(events) {
         <strong>${formatEventDate(tmEvent.event_date)}</strong>
         <span>${escapeHtml(getEventTimingLabel(tmEvent))}</span>
       </div>
-      <p>${escapeHtml(tmEvent.event_mode === "Virtual" ? "Live Online Zoom Session (Serving Kolkata &amp; WB)" : tmEvent.venue)}</p>
-      ${tmEvent.description ? `<p>${escapeHtml(tmEvent.description)}</p>` : ""}
+      <p class="event-venue-desc">${escapeHtml(venueDesc)}</p>
       <button class="button primary reserve-button" type="button" data-event-id="${tmEvent.id}">
         Reserve Seat
       </button>
@@ -332,7 +334,6 @@ function openRegistrationForm({ scroll = true, focusFirstField = false } = {}) {
 }
 
 setRegistrationOpen(false);
-activateTab("stress");
 showTestimonial(0);
 
 function updateHeaderState() {
@@ -449,20 +450,6 @@ openQuestionButtons.forEach((button) => button.addEventListener("click", openMod
 closeModalButtons.forEach((button) => button.addEventListener("click", closeModal));
 openVideoButtons.forEach((button) => button.addEventListener("click", openVideoModal));
 closeVideoButtons.forEach((button) => button.addEventListener("click", closeVideoModal));
-
-tabButtons.forEach((button) => {
-  button.addEventListener("click", () => activateTab(button.dataset.tab));
-});
-
-const benefitTabList = document.querySelector(".benefit-tabs [role='tablist']");
-if (benefitTabList) {
-  benefitTabList.addEventListener("click", (event) => {
-    const tab = event.target.closest("[role='tab'][data-tab]");
-    if (tab) {
-      activateTab(tab.dataset.tab);
-    }
-  });
-}
 
 document.querySelectorAll(".accordion details").forEach((details) => {
   details.addEventListener("toggle", () => {
