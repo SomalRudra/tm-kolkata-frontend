@@ -640,4 +640,47 @@ questionForm.addEventListener("submit", async (event) => {
   window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
 });
 
+// Charts carousel
+const chartsInner = document.querySelector(".charts-carousel-inner");
+const chartSlides = document.querySelectorAll(".chart-slide");
+const chartPrev = document.querySelector("[data-chart-prev]");
+const chartNext = document.querySelector("[data-chart-next]");
+const chartDotsContainer = document.querySelector(".chart-dots");
+let chartIndex = 0;
+
+if (chartsInner && chartSlides.length) {
+  chartSlides.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = "chart-dot" + (i === 0 ? " is-active" : "");
+    dot.type = "button";
+    dot.setAttribute("aria-label", "Go to chart " + (i + 1));
+    dot.addEventListener("click", () => {
+      chartIndex = i;
+      updateChartSlide();
+    });
+    chartDotsContainer.append(dot);
+  });
+
+  function updateChartSlide() {
+    chartsInner.style.transform = "translateX(-" + (chartIndex * 100) + "%)";
+    document.querySelectorAll(".chart-dot").forEach((dot, i) => {
+      dot.classList.toggle("is-active", i === chartIndex);
+    });
+  }
+
+  if (chartPrev) {
+    chartPrev.addEventListener("click", () => {
+      chartIndex = (chartIndex - 1 + chartSlides.length) % chartSlides.length;
+      updateChartSlide();
+    });
+  }
+
+  if (chartNext) {
+    chartNext.addEventListener("click", () => {
+      chartIndex = (chartIndex + 1) % chartSlides.length;
+      updateChartSlide();
+    });
+  }
+}
+
 loadEvents();
