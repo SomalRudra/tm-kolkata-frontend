@@ -347,7 +347,7 @@ summary:focus-visible {
   z-index: -2;
   background:
     linear-gradient(180deg, rgba(11, 27, 61, 0.34) 0%, rgba(11, 27, 61, 0.6) 100%),
-    url("https://images.prismic.io/mfusa/aTf22XNYClf9n9iC_0841-TM-Image-Generic-MFI-People-Landscape%E2%80%93View%E2%80%93Mountain%E2%80%93Sunset-Unsplash-Free-6000%C3%974000.jpg?auto=format%2Ccompress&rect=2026%2C414%2C3974%2C2649&w=2880&h=4000&fit=cover") center / cover no-repeat;
+    url("top-section-bg1.png") center / cover no-repeat;
 }
 
 .hero::after {
@@ -1611,7 +1611,7 @@ textarea {
   .hero-media {
     background:
       linear-gradient(180deg, rgba(11, 27, 61, 0.94), rgba(11, 27, 61, 0.62)),
-      url("https://images.prismic.io/mfusa/aTf22XNYClf9n9iC_0841-TM-Image-Generic-MFI-People-Landscape%E2%80%93View%E2%80%93Mountain%E2%80%93Sunset-Unsplash-Free-6000%C3%974000.jpg?auto=format%2Ccompress&rect=2026%2C414%2C3974%2C2649&w=2880&h=4000&fit=cover") center / cover no-repeat;
+      url("top-section-bg1.png") center / cover no-repeat;
   }
 
   .hero-actions .button,
