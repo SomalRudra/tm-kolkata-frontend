@@ -14,7 +14,7 @@ const openQuestionButtons = document.querySelectorAll("[data-open-question]");
 const closeModalButtons = document.querySelectorAll("[data-close-modal]");
 const openVideoButtons = document.querySelectorAll("[data-open-video]");
 const closeVideoButtons = document.querySelectorAll("[data-close-video]");
-const registrationSection = document.querySelector("#registration");
+const registrationSection = document.querySelector("#register");
 const registrationForm = registrationSection.querySelector("form");
 const registrationToggle = document.querySelector("[data-toggle-registration]");
 const questionForm = document.querySelector("#question-form");
@@ -22,16 +22,11 @@ const eventGrid = document.querySelector("#event-grid");
 const preferredDateSelect = registrationForm.elements.preferredDate;
 const tabButtons = document.querySelectorAll("[role='tab'][data-tab]");
 const tabPanels = document.querySelectorAll("[role='tabpanel'][data-panel]");
-const testimonials = document.querySelectorAll(".testimonial-card");
-const carouselPrev = document.querySelector("[data-carousel-prev]");
-const carouselNext = document.querySelector("[data-carousel-next]");
 const navLinks = document.querySelectorAll(".site-nav a[href^='#']");
 const spySections = Array.from(navLinks)
   .map((link) => document.querySelector(link.getAttribute("href")))
   .filter(Boolean);
 let publishedEvents = [];
-let testimonialIndex = 0;
-let testimonialTimer = null;
 
 function getNextWeekdayDate(targetWeekday, hour, minute) {
   const date = new Date();
@@ -334,7 +329,6 @@ function openRegistrationForm({ scroll = true, focusFirstField = false } = {}) {
 }
 
 setRegistrationOpen(false);
-showTestimonial(0);
 
 function updateHeaderState() {
   siteHeader.classList.toggle("is-scrolled", window.scrollY > 50);
@@ -379,35 +373,6 @@ function activateTab(tabName) {
     panel.classList.toggle("is-active", isActive);
     panel.hidden = !isActive;
   });
-}
-
-function showTestimonial(nextIndex) {
-  if (!testimonials.length) {
-    return;
-  }
-
-  testimonialIndex = (nextIndex + testimonials.length) % testimonials.length;
-  testimonials.forEach((card, index) => {
-    card.classList.toggle("is-active", index === testimonialIndex);
-  });
-}
-
-function startTestimonialAutoplay() {
-  if (testimonialTimer || testimonials.length < 2) {
-    return;
-  }
-
-  testimonialTimer = window.setInterval(() => {
-    showTestimonial(testimonialIndex + 1);
-  }, 5000);
-}
-
-function resetTestimonialAutoplay() {
-  if (testimonialTimer) {
-    window.clearInterval(testimonialTimer);
-    testimonialTimer = null;
-  }
-  startTestimonialAutoplay();
 }
 
 navToggle.addEventListener("click", () => {
@@ -465,43 +430,7 @@ document.querySelectorAll(".accordion details").forEach((details) => {
   });
 });
 
-if (carouselPrev && carouselNext) {
-  const stepTestimonial = (direction) => {
-    showTestimonial(testimonialIndex + direction);
-    resetTestimonialAutoplay();
-  };
-
-  carouselPrev.addEventListener("click", () => {
-    stepTestimonial(-1);
-  });
-  carouselNext.addEventListener("click", () => {
-    stepTestimonial(1);
-  });
-
-  document.addEventListener("click", (event) => {
-    const prevButton = event.target.closest("[data-carousel-prev]");
-    const nextButton = event.target.closest("[data-carousel-next]");
-    if (prevButton) {
-      stepTestimonial(-1);
-    }
-    if (nextButton) {
-      stepTestimonial(1);
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowLeft" && document.activeElement && document.activeElement.closest(".testimonial-section")) {
-      stepTestimonial(-1);
-    }
-    if (event.key === "ArrowRight" && document.activeElement && document.activeElement.closest(".testimonial-section")) {
-      stepTestimonial(1);
-    }
-  });
-}
-
-startTestimonialAutoplay();
-
-document.querySelectorAll('a[href="#registration"]').forEach((link) => {
+document.querySelectorAll('a[href="#register"]').forEach((link) => {
   link.addEventListener("click", (event) => {
     event.preventDefault();
     openRegistrationForm({ scroll: true, focusFirstField: true });

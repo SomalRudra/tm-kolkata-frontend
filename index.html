@@ -41,16 +41,73 @@
           <a href="#top">About TM</a>
           <a href="#benefits">Benefits</a>
           <a href="#featured">Featured In</a>
-          <a href="#learn">How to Learn</a>
-          <a href="#registration">Intro Sessions</a>
+          <a href="#steps">How to Learn</a>
+          <a href="#register">Intro Sessions</a>
         </nav>
         <div class="header-actions">
-          <a class="nav-cta" href="#registration">Book Free Session</a>
+          <a class="nav-cta" href="#register">Book Free Session</a>
         </div>
       </div>
     </header>
 
     <main id="top">
+      <!-- =================================================================
+           TEMP: Asymmetric Hero Split with vertical video showcase.
+           To rollback: delete this TEMP section below, uncomment the
+           ORIGINAL hero section further down, and delete the TEMP hero
+           css block at the end of styles.css.
+           ================================================================= -->
+      <section class="hero temp-asym-hero">
+        <div class="hero-media" aria-hidden="true"></div>
+        <div class="section-shell temp-asym-layout">
+          <div class="temp-asym-copy">
+            <h1>Discover deeper calm, greater clarity, creativity and inner freedom</h1>
+            <p class="temp-asym-sub">
+              Transcendental Meditation&reg; &mdash; a simple, effortless practice that helps you reconnect with yourself, experience deep inner rest and unlock your natural potential. Taught one-on-one and practiced for just 20 minutes twice a day.
+            </p>
+            <div class="temp-asym-actions">
+              <a class="button primary temp-asym-btn" href="https://www.youtube.com/watch?v=TQrcjJHA5dc" target="_blank" rel="noopener">Watch 2-Minute Video</a>
+              <a class="button primary temp-asym-btn" href="#register">Book a Free Intro Session</a>
+            </div>
+          </div>
+          <div class="temp-asym-device" aria-label="Dive Deep with Transcendental Meditation video">
+            <div class="temp-asym-phone">
+              <span class="temp-asym-notch" aria-hidden="true"></span>
+              <div class="temp-asym-screen">
+                <iframe src="https://www.youtube.com/embed/TQrcjJHA5dc?rel=0&amp;playsinline=1&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=TQrcjJHA5dc" title="Dive Deep with Transcendental Meditation" loading="eager" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-shell temp-asym-unique">
+          <p class="unique-heading">TM IS UNIQUE</p>
+          <div class="trust-strip unique-grid" aria-label="Why Transcendental Meditation is unique">
+            <div>
+              <span class="unique-number">1</span>
+              <strong>Natural, effortless technique</strong>
+              <span>No focus, no concentration, no trying to control the mind.</span>
+            </div>
+            <div>
+              <span class="unique-number">2</span>
+              <strong>Personalized instruction</strong>
+              <span>One-on-one instruction by a certified TM teacher.</span>
+            </div>
+            <div>
+              <span class="unique-number">3</span>
+              <strong>Authentic, evidence-based</strong>
+              <span>Proven by 400+ peer-reviewed studies and practiced globally.</span>
+            </div>
+            <div>
+              <span class="unique-number">4</span>
+              <strong>Lifetime support</strong>
+              <span>Personal checking, follow-up sessions, and group support.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ORIGINAL HERO (pre-temp) — uncomment to restore, remove the TEMP
+           section above and the TEMP hero css block in styles.css.
       <section class="hero tmorg-hero">
         <div class="hero-media" aria-hidden="true"></div>
         <div class="section-shell hero-layout">
@@ -62,8 +119,8 @@
               Transcendental Meditation&reg; — a simple, effortless practice that helps you reconnect with yourself, experience deep inner rest and unlock your natural potential. Taught one-on-one and practiced for just 20 minutes twice a day.
             </p>
             <div class="hero-actions">
-              <a class="button primary" href="#registration">Watch 2-Minute Video</a>
-              <a class="button primary" href="#registration">Book a Free Intro Session</a>
+              <a class="button primary" href="#register">Watch 2-Minute Video</a>
+              <a class="button primary" href="#register">Book a Free Intro Session</a>
             </div>
             <p class="unique-heading">TM IS UNIQUE</p>
             <div class="trust-strip unique-grid" aria-label="Why Transcendental Meditation is unique">
@@ -91,6 +148,7 @@
           </div>
         </div>
       </section>
+      -->
 
       <section id="featured" class="press-section soft-bg" aria-label="Featured in">
         <div class="section-shell press-layout">
@@ -145,7 +203,7 @@
         </div>
       </section>
 
-      <section class="section-block founder-band" aria-label="Maharishi Mahesh Yogi">
+      <section id="research" class="section-block founder-band" aria-label="Maharishi Mahesh Yogi">
         <div class="section-shell founder-layout">
           <img class="founder-image" src="maharishi.jpeg" alt="Maharishi Mahesh Yogi">
           <div>
@@ -164,7 +222,7 @@
         </div>
       </section>
 
-      <section class="section-block charts-section soft-bg" aria-label="Research Charts">
+      <section id="comparison" class="section-block charts-section soft-bg" aria-label="Research Charts">
         <div class="section-shell">
           <p class="eyebrow">TM vs Other Practices</p>
           <div class="charts-carousel" aria-label="Research chart slides">
@@ -187,39 +245,91 @@
         </div>
       </section>
 
-      <section id="testimonials" class="section-block testimonial-section soft-bg">
+      <section id="reviews" class="section-block testimonial-section soft-bg">
         <div class="section-shell">
-          <div class="heading-row">
-            <div>
-              <h2>What people say about their TM practice</h2>
-            </div>
-            <div class="carousel-controls" aria-label="Testimonial controls">
-              <button type="button" data-carousel-prev aria-label="Previous testimonial">‹</button>
-              <button type="button" data-carousel-next aria-label="Next testimonial">›</button>
-            </div>
+          <div class="reviews-heading">
+            <h2>What people say about their TM practice</h2>
+            <p class="reviews-subtitle">Real voices from practitioners who found greater calm, clarity, and ease through Transcendental Meditation.</p>
           </div>
-          <div class="testimonial-carousel" aria-label="Experiences with Transcendental Meditation">
-            <article class="testimonial-card is-active">
-              <p>Learning Transcendental Meditation under Debasish Sarkar helped me feel more focused while studying, calmer in stressful situations, and mentally refreshed every day.</p>
-              <strong>Titli Saha</strong><span>Student</span>
+
+          <div class="video-spotlight" aria-label="Featured video testimonials">
+            <article class="spotlight-card">
+              <div class="spotlight-video">
+                <iframe src="https://www.youtube-nocookie.com/embed/BotJhZD8CFU" title="Dr Jessica Ashe video testimonial" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <blockquote class="spotlight-quote">
+                <p>&ldquo;TM reduced stress and enhanced my focus.&rdquo;</p>
+              </blockquote>
+              <p class="spotlight-attribution"><strong>Dr Jessica Ashe</strong> &middot; Assistant Director, Miami University</p>
             </article>
-            <article class="testimonial-card">
-              <p>The sessions were clear, authentic, and thoughtful. The practice became easy to understand, and the guidance made the whole learning process calm and meaningful.</p>
-              <strong>Ritika Sharma</strong><span>Practitioner</span>
-            </article>
-            <article class="testimonial-card">
-              <p>It has been the easiest and most convenient practice I have found in years, and I am grateful for the care, kindness, and guidance that made it such a valuable decision.</p>
-              <strong>Anupam Bhattacharyya</strong><span>Practitioner</span>
-            </article>
-            <article class="testimonial-card">
-              <p>Meeting the teacher opened a new world for me. The practice became a practical way to release stress, and the support continued well beyond the first session.</p>
-              <strong>Mani Das</strong><span>Practitioner</span>
+
+            <article class="spotlight-card">
+              <div class="spotlight-video">
+                <iframe src="https://www.youtube-nocookie.com/embed/Gdi6e-FCCSs" title="Dr Mani Das video testimonial" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <blockquote class="spotlight-quote">
+                <p>&ldquo;TM provides deep relaxation, reduces stress, and enhances mental clarity.&rdquo;</p>
+              </blockquote>
+              <p class="spotlight-attribution"><strong>Dr. Mani Das</strong> &middot; Mental Health Consultant and an Educator</p>
             </article>
           </div>
+
+          <div class="written-grid" aria-label="Written testimonials">
+            <article class="written-card">
+              <blockquote>
+                <p>Learning Transcendental Meditation under Debasish Sarkar helped me feel more focused while studying, calmer in stressful situations, and mentally refreshed every day.</p>
+              </blockquote>
+              <p class="written-attribution"><strong>Titli Saha</strong> &middot; Student</p>
+            </article>
+            <article class="written-card">
+              <blockquote>
+                <p>The sessions were clear, authentic, and thoughtful. The practice became easy to understand, and the guidance made the whole learning process calm and meaningful.</p>
+              </blockquote>
+              <p class="written-attribution"><strong>Ritika Sharma</strong> &middot; Professional</p>
+            </article>
+            <article class="written-card">
+              <blockquote>
+                <p>It has been the easiest and most convenient practice I have found in years, and I am grateful for the care, kindness, and guidance that made it such a valuable decision.</p>
+              </blockquote>
+              <p class="written-attribution"><strong>Anupam Bhattacharyya</strong> &middot; IT Professional</p>
+            </article>
+            <article class="written-card">
+              <blockquote>
+                <p>In 2020, I reached a point where I felt completely lost and disconnected from the things I once enjoyed the most. I realized that, for the sake of my own well-being and sanity, I needed to make a conscious decision to change the direction of my life. I chose to put a hold on a full-time responsibility that I had and focus instead on rediscovering my true self. I began practicing yoga regularly, reading books on well-being, and attending therapy. While these helped, I still felt that something important was missing&mdash;something that could bring me back to a state of calm and balance. In 2024, I learned about Transcendental Meditation through a friend who had started practicing TM during the pandemic. During a trip to India, I had the opportunity to learn TM myself and discover the role it could play in the missing part of my journey. TM brought me a sense of contentment, genuine joy, and inner peace. It helped me reconnect with a level of happiness that had been absent from my life since 2020. After practicing TM for seven months, I felt ready to return to the full-time duty that I put on hold. Since then, I have been deeply grateful for the gift I gave myself through this practice. TM has strengthened my self-awareness, brought tremendous relief, and continues to enrich my life every day.</p>
+              </blockquote>
+              <p class="written-attribution"><strong>Najmeh Nikpour Ph.D</strong> &middot; Research Scientist</p>
+            </article>
+          </div>
+          <script>
+            (function () {
+              var LIMIT = 80;
+              document.querySelectorAll(".written-card blockquote").forEach(function (quote) {
+                var full = quote.textContent.trim().replace(/\s+/g, " ");
+                var words = full.split(" ");
+                if (words.length <= LIMIT) {
+                  return;
+                }
+                var short = words.slice(0, LIMIT).join(" ") + "…";
+                var button = document.createElement("button");
+                button.type = "button";
+                button.className = "written-read-more";
+                button.textContent = "Read more";
+                button.setAttribute("aria-expanded", "false");
+                button.addEventListener("click", function () {
+                  var expanded = button.getAttribute("aria-expanded") === "true";
+                  quote.textContent = expanded ? short : full;
+                  button.textContent = expanded ? "Read more" : "Read less";
+                  button.setAttribute("aria-expanded", expanded ? "false" : "true");
+                });
+                quote.textContent = short;
+                quote.insertAdjacentElement("afterend", button);
+              });
+            })();
+          </script>
         </div>
       </section>
 
-      <section id="learn" class="section-block learn-section soft-bg">
+      <section id="steps" class="section-block learn-section soft-bg">
         <div class="section-shell">
           <p class="eyebrow">Steps to Learn TM</p>
           <div class="roadmap" aria-label="Four step learning method">
@@ -231,7 +341,7 @@
         </div>
       </section>
 
-      <section id="center" class="section-block center-finder-section soft-bg">
+      <section id="teacher" class="section-block center-finder-section soft-bg">
         <div class="section-shell">
           <p class="eyebrow">Know Your Teacher</p>
           <div class="center-local-grid">
@@ -250,7 +360,7 @@
               <p class="live-online-label">Live Online Session</p>
             </div>
           </div>
-          <article class="registration-panel" id="registration" aria-live="polite">
+          <article class="registration-panel" id="register" aria-live="polite">
             <div class="form-heading">
               <button class="registration-toggle" type="button" data-toggle-registration aria-expanded="false">
                 Register Free For TM Course
@@ -297,7 +407,7 @@
         </div>
       </section>
 
-      <section id="faqs" class="section-block faq-section soft-bg">
+      <section id="faq" class="section-block faq-section soft-bg">
         <div class="section-shell faq-layout">
           <div>
             <div class="section-heading">
@@ -332,7 +442,7 @@
           <a href="#top">About TM</a>
           <a href="#benefits">Benefits</a>
           <a href="#featured">Featured In</a>
-          <a href="#learn">How to Learn</a>
+          <a href="#steps">How to Learn</a>
         </div>
         <div>
           <strong>Contact</strong>
