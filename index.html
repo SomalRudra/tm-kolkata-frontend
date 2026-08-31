@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" href="https://www.indiatm.org/assets/img/logo-header-2.png">
     <link rel="preconnect" href="https://www.tm.org">
     <link rel="preconnect" href="https://images.prismic.io">
-    <link rel="stylesheet" href="styles.css?v=tmorg-full-local-1">
+    <link rel="stylesheet" href="styles.css?v=tmorg-full-local-2">
   </head>
   <body>
     <header class="site-header">
@@ -66,7 +66,7 @@
               Transcendental Meditation&reg; &mdash; a simple, effortless practice that helps you reconnect with yourself, experience deep inner rest and unlock your natural potential. Taught one-on-one and practiced for just 20 minutes twice a day.
             </p>
             <div class="temp-asym-actions">
-              <a class="button primary temp-asym-btn" href="https://www.youtube.com/watch?v=TQrcjJHA5dc" target="_blank" rel="noopener">Watch 2-Minute Video</a>
+              <a class="button primary temp-asym-btn" href="#" data-dive-deep>Watch 2-Minute Video</a>
               <a class="button primary temp-asym-btn" href="#register">Book a Free Intro Session</a>
             </div>
           </div>
@@ -74,7 +74,17 @@
             <div class="temp-asym-phone">
               <span class="temp-asym-notch" aria-hidden="true"></span>
               <div class="temp-asym-screen">
-                <iframe src="https://www.youtube.com/embed/TQrcjJHA5dc?rel=0&amp;playsinline=1&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=TQrcjJHA5dc" title="Dive Deep with Transcendental Meditation" loading="eager" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                <video class="temp-asym-video" src="dive-deep.mp4" autoplay muted loop playsinline preload="auto" aria-label="Dive Deep with Transcendental Meditation"></video>
+                <div class="temp-asym-controls" aria-label="Video controls">
+                  <button class="temp-control" type="button" data-temp-playpause>
+                    <svg viewBox="0 0 24 24" fill="currentColor" data-icon-play><path d="M8 5v14l11-7z"></path></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" data-icon-pause hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z"></path></svg>
+                  </button>
+                  <button class="temp-control" type="button" data-temp-mute>
+                    <svg viewBox="0 0 24 24" fill="currentColor" data-icon-vol><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M16.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" data-icon-muted hidden><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M16 10l6 6M22 10l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -104,7 +114,88 @@
             </div>
           </div>
         </div>
+        <div class="temp-dive-overlay" hidden data-dive-overlay>
+          <div class="temp-dive-backdrop" data-dive-close></div>
+          <div class="temp-dive-frame">
+            <button class="temp-dive-close" type="button" aria-label="Close video" data-dive-close>&times;</button>
+            <video class="temp-dive-video" src="dive-deep.mp4" controls playsinline preload="metadata"></video>
+          </div>
+        </div>
       </section>
+
+      <script>
+        (function () {
+          var video = document.querySelector(".temp-asym-video");
+          var screen = document.querySelector(".temp-asym-screen");
+          if (!video) return;
+
+          var playBtn = document.querySelector("[data-temp-playpause]");
+          var muteBtn = document.querySelector("[data-temp-mute]");
+          var playIcon = playBtn && playBtn.querySelector("[data-icon-play]");
+          var pauseIcon = playBtn && playBtn.querySelector("[data-icon-pause]");
+          var volIcon = muteBtn && muteBtn.querySelector("[data-icon-vol]");
+          var mutedIcon = muteBtn && muteBtn.querySelector("[data-icon-muted]");
+
+          function syncControls() {
+            var showPlay = !!video.paused;
+            var showVol = !video.muted;
+            if (playBtn && playIcon && pauseIcon) {
+              playIcon.style.display = showPlay ? "block" : "none";
+              pauseIcon.style.display = showPlay ? "none" : "block";
+              playIcon.hidden = !showPlay;
+              pauseIcon.hidden = showPlay;
+              playBtn.setAttribute("aria-label", showPlay ? "Play" : "Pause");
+            }
+            if (muteBtn && volIcon && mutedIcon) {
+              volIcon.style.display = showVol ? "block" : "none";
+              mutedIcon.style.display = showVol ? "none" : "block";
+              volIcon.hidden = !showVol;
+              mutedIcon.hidden = showVol;
+              muteBtn.setAttribute("aria-label", showVol ? "Mute" : "Unmute");
+            }
+            if (screen) screen.classList.toggle("paused-controls", video.paused);
+          }
+
+          function togglePlay() {
+            if (video.paused) video.play(); else video.pause();
+          }
+
+          if (playBtn) playBtn.addEventListener("click", togglePlay);
+          if (muteBtn) muteBtn.addEventListener("click", function () {
+            video.muted = !video.muted;
+          });
+          if (video) video.addEventListener("click", togglePlay);
+          video.addEventListener("play", syncControls);
+          video.addEventListener("playing", syncControls);
+          video.addEventListener("pause", syncControls);
+          video.addEventListener("volumechange", syncControls);
+          syncControls();
+          setInterval(syncControls, 250);
+
+          var trigger = document.querySelector("[data-dive-deep]");
+          var overlay = document.querySelector("[data-dive-overlay]");
+          var overlayVideo = overlay && overlay.querySelector("video");
+          if (trigger && overlay && overlayVideo) {
+            trigger.addEventListener("click", function (event) {
+              event.preventDefault();
+              overlay.hidden = false;
+              overlayVideo.play();
+            });
+            Array.prototype.forEach.call(overlay.querySelectorAll("[data-dive-close]"), function (el) {
+              el.addEventListener("click", function () {
+                overlay.hidden = true;
+                overlayVideo.pause();
+              });
+            });
+            document.addEventListener("keydown", function (event) {
+              if (event.key === "Escape" && !overlay.hidden) {
+                overlay.hidden = true;
+                overlayVideo.pause();
+              }
+            });
+          }
+        })();
+      </script>
 
       <!-- ORIGINAL HERO (pre-temp) — uncomment to restore, remove the TEMP
            section above and the TEMP hero css block in styles.css.
@@ -488,6 +579,6 @@
       </section>
     </div>
 
-    <script src="app.js?v=tmorg-full-local-1"></script>
+    <script src="app.js?v=tmorg-full-local-2"></script>
   </body>
 </html>
