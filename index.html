@@ -78,11 +78,11 @@
                 <div class="temp-asym-controls" aria-label="Video controls">
                   <button class="temp-control" type="button" data-temp-playpause aria-label="Play" title="Play / pause">
                     <svg viewBox="0 0 24 24" fill="currentColor" data-icon-play><path d="M8 5v14l11-7z"></path></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor" data-icon-pause hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z"></path></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" data-icon-pause><path d="M6 5h4v14H6zM14 5h4v14h-4z"></path></svg>
                   </button>
                   <button class="temp-control" type="button" data-temp-mute aria-label="Mute" title="Mute / unmute">
                     <svg viewBox="0 0 24 24" fill="currentColor" data-icon-vol><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M16.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
-                    <svg viewBox="0 0 24 24" fill="currentColor" data-icon-muted hidden><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M16 10l6 6M22 10l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" data-icon-muted><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M16 10l6 6M22 10l-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
                   </button>
                 </div>
               </div>
@@ -105,7 +105,7 @@
             <div>
               <span class="unique-number">3</span>
               <strong>Authentic, evidence-based</strong>
-              <span>Proven by 400+ peer-reviewed studies and practiced globally.</span>
+              <span>Supported by 400+ peer-reviewed studies and practiced globally.</span>
             </div>
             <div>
               <span class="unique-number">4</span>
@@ -140,17 +140,11 @@
             var showPlay = !!video.paused;
             var showVol = !video.muted;
             if (playBtn && playIcon && pauseIcon) {
-              playIcon.style.display = showPlay ? "block" : "none";
-              pauseIcon.style.display = showPlay ? "none" : "block";
-              playIcon.hidden = !showPlay;
-              pauseIcon.hidden = showPlay;
+              playBtn.classList.toggle("is-playing", !showPlay);
               playBtn.setAttribute("aria-label", showPlay ? "Play" : "Pause");
             }
             if (muteBtn && volIcon && mutedIcon) {
-              volIcon.style.display = showVol ? "block" : "none";
-              mutedIcon.style.display = showVol ? "none" : "block";
-              volIcon.hidden = !showVol;
-              mutedIcon.hidden = showVol;
+              muteBtn.classList.toggle("is-muted", !showVol);
               muteBtn.setAttribute("aria-label", showVol ? "Mute" : "Unmute");
             }
             if (screen) screen.classList.toggle("paused-controls", video.paused);
@@ -249,7 +243,7 @@
         <div class="section-shell press-layout">
           <p class="eyebrow">Featured In</p>
           <div class="press-quote">
-            <p>TM is widely covered internationally for its effortless practice, extensive scientific research documenting its wide range of benefits, including in:</p>
+            <p>TM is widely covered internationally for its effortless practice and a broad body of scientific research, including in:</p>
           </div>
           <div class="brand-logos" aria-label="Publication logos">
             <span class="logo-cleveland-clinic">Cleveland Clinic</span>
@@ -266,8 +260,8 @@
           <div class="benefit-grid">
             <article class="benefit-card">
               <img src="https://www.indiatm.org/uploads/about/1774480807_69c46da7dab81.png" alt="Reduce Stress" class="benefit-icon-img">
-              <h3>Reduces Stress &amp; Anxiety</h3>
-              <p>Alleviates stress by allowing the mind to settle inward naturally beyond active thinking.</p>
+              <h3>Supports Stress Relief</h3>
+              <p>Supports stress relief by allowing the mind to settle inward naturally beyond active thinking.</p>
             </article>
             <article class="benefit-card">
               <img src="https://www.indiatm.org/uploads/about/1774480236_69c46b6c07f82.png" alt="Improves Focus" class="benefit-icon-img">
@@ -281,8 +275,8 @@
             </article>
             <article class="benefit-card">
               <img src="https://www.indiatm.org/uploads/about/1774480807_69c46da7dbbad.png" alt="Better Heart Health" class="benefit-icon-img">
-              <h3>Supports Heart Health</h3>
-              <p>Supports optimal heart function through deep rest and reduced mental and physical stress.</p>
+              <h3>Supports Restful Physiology</h3>
+              <p>Supports deep rest and a calmer response to mental and physical strain.</p>
             </article>
             <article class="benefit-card">
               <img src="https://www.indiatm.org/uploads/about/1774480292_69c46ba4a8352.png" alt="Enhances Creativity" class="benefit-icon-img">
@@ -309,7 +303,7 @@
             <div class="maharishi-quote">
               <p>"The quality of life is not determined by the quality of your thoughts, but by the quality of the consciousness from which your thoughts arise."</p>
             </div>
-            <div class="hero-actions">
+            <div class="hero-actions research-link-actions">
               <a class="section-link" href="https://www.tm.org/en-us/benefits" target="_blank" rel="noopener">Research links</a>
               <a class="section-link" href="https://www.tm.org/scientific-research" target="_blank" rel="noopener">Scientific study links</a>
             </div>
@@ -324,11 +318,11 @@
             <div class="charts-carousel-inner">
               <div class="chart-slide is-active">
                 <img src="chart1.jpeg" alt="Chart showing TM is twice as effective at reducing anxiety">
-                <p>Stanford meta-analysis of 146 studies: TM is twice as effective at reducing anxiety compared to other techniques.</p>
+                <p>A Stanford meta-analysis of 146 studies reported significant anxiety-reduction findings for TM compared with other techniques.</p>
               </div>
               <div class="chart-slide">
                 <img src="chart2.jpeg" alt="Chart showing TM reduces cortisol by 30%">
-                <p>Landmark study published in Hormones and Behavior: TM reduces cortisol, the stress hormone, by 30%.</p>
+                <p>A study published in Hormones and Behavior reported reduced cortisol levels among TM practitioners.</p>
               </div>
             </div>
           </div>
@@ -462,7 +456,7 @@
               </button>
               <h3>Fill in your details, we will reach out to you.</h3>
             </div>
-            <form class="form-panel" novalidate hidden>
+            <form class="form-panel" method="post" novalidate hidden>
               <div class="form-grid">
                 <label>Full Name <input name="fullName" type="text" autocomplete="name" required minlength="2"></label>
                 <label>Email <input name="email" type="email" autocomplete="email" required></label>
@@ -477,10 +471,10 @@
                   <legend>What motivated you to learn Transcendental Meditation?</legend>
                   <label><input name="motivation" type="checkbox" value="Reduce stress"> Reduce stress</label>
                   <label><input name="motivation" type="checkbox" value="Better sleep"> Better sleep</label>
-                  <label><input name="motivation" type="checkbox" value="Anxiety management"> Anxiety management</label>
+                  <label><input name="motivation" type="checkbox" value="Greater calm"> Greater calm</label>
                   <label><input name="motivation" type="checkbox" value="Improve focus and memory"> Improve focus and memory</label>
                   <label><input name="motivation" type="checkbox" value="Better decision-making"> Better decision-making</label>
-                  <label><input name="motivation" type="checkbox" value="Better physical health"> Better physical health</label>
+                  <label><input name="motivation" type="checkbox" value="General well-being"> General well-being</label>
                   <label><input name="motivation" type="checkbox" value="Emotional well-being"> Emotional well-being</label>
                   <label><input name="motivation" type="checkbox" value="Spiritual growth"> Spiritual growth</label>
                   <label><input name="motivation" type="checkbox" value="Personal development"> Personal development</label>
@@ -495,6 +489,7 @@
                 <label>Receive future updates? <select name="futureUpdates"><option value="">Choose an option</option><option>Yes</option><option>No</option></select></label>
                 <label class="full-width">Questions before the intro session <textarea name="preSessionQuestions" rows="3"></textarea></label>
               </div>
+              <p class="privacy-note">By submitting this form, you agree that the Kolkata TM coordination team may use your contact details to respond to your enquiry, reserve an introductory session, and send relevant follow-up. We do not sell personal information. See the privacy and advertising disclosure below.</p>
               <button class="button primary full-width" type="submit">Submit Registration</button>
               <p class="form-message" role="status" aria-live="polite"></p>
             </form>
@@ -538,18 +533,25 @@
           <a href="#benefits">Benefits</a>
           <a href="#featured">Featured In</a>
           <a href="#steps">How to Learn</a>
+          <a href="#faq">FAQs</a>
+          <a href="#privacy">Privacy &amp; Ads</a>
         </div>
         <div>
           <strong>Contact</strong>
           <button class="text-button" type="button" data-open-question>Contact Us</button>
         </div>
       </div>
+      <div class="footer-disclosure" id="privacy">
+        <strong>Privacy &amp; advertising disclosure</strong>
+        <p>Information submitted through this website is used to answer enquiries, coordinate introductory talks, and follow up about Transcendental Meditation programs. Lead information may be stored locally in the browser, sent to the TM Kolkata coordination/backend systems, and used for aggregate website analytics. This site does not sell personal information.</p>
+        <p>Health and well-being information on this website is general educational content. Transcendental Meditation instruction is not a medical service and is not a substitute for diagnosis, treatment, therapy, or advice from a licensed healthcare professional. Individual experiences may vary.</p>
+      </div>
       <p class="legal-copy">
         COPYRIGHT 2026 &copy; SPIRITUAL REGENERATION MOVEMENT FOUNDATION OF INDIA. ALL RIGHTS RESERVED. Transcendental Meditation&reg;,
         TM&reg;, Maharishi&reg;, and related marks are trademarks or registered trademarks of their
         respective owners and are used only with authorization where applicable. Linked third-party
         research, articles, videos, and testimonials remain the property of their original publishers.
-        This website provides general educational information and is not medical advice.
+        This website provides general educational information and is not medical advice. Course availability, formats, eligibility, and fees are confirmed by the local coordination team before enrollment.
       </p>
     </footer>
 
@@ -561,11 +563,12 @@
       <section class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="question-title">
         <button class="modal-close" type="button" aria-label="Close question form" data-close-modal>&times;</button>
         <h2 id="question-title">Ask a question</h2>
-        <form id="question-form" novalidate>
+        <form id="question-form" method="post" novalidate>
           <label>Full Name <input name="fullName" type="text" autocomplete="name" required minlength="2"></label>
           <label>Email <input name="email" type="email" autocomplete="email" required></label>
           <label>Phone Number <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9+\-\s]{8,15}"></label>
           <label>Question <textarea name="question" rows="4" required minlength="8"></textarea></label>
+          <p class="privacy-note">Your contact details and question will be used to respond to this enquiry and continue the conversation on WhatsApp. We do not sell personal information.</p>
           <button class="button primary full-width" type="submit">Send Query &amp; Open WhatsApp</button>
           <p class="form-message" role="status" aria-live="polite"></p>
         </form>
