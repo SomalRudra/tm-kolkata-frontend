@@ -76,11 +76,11 @@
               <div class="temp-asym-screen">
                 <video class="temp-asym-video" src="dive-deep.mp4" autoplay muted loop playsinline preload="auto" aria-label="Dive Deep with Transcendental Meditation"></video>
                 <div class="temp-asym-controls" aria-label="Video controls">
-                  <button class="temp-control" type="button" data-temp-playpause>
+                  <button class="temp-control" type="button" data-temp-playpause aria-label="Play" title="Play / pause">
                     <svg viewBox="0 0 24 24" fill="currentColor" data-icon-play><path d="M8 5v14l11-7z"></path></svg>
                     <svg viewBox="0 0 24 24" fill="currentColor" data-icon-pause hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z"></path></svg>
                   </button>
-                  <button class="temp-control" type="button" data-temp-mute>
+                  <button class="temp-control" type="button" data-temp-mute aria-label="Mute" title="Mute / unmute">
                     <svg viewBox="0 0 24 24" fill="currentColor" data-icon-vol><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M16.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
                     <svg viewBox="0 0 24 24" fill="currentColor" data-icon-muted hidden><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M16 10l6 6M22 10l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
                   </button>
@@ -155,6 +155,10 @@
             }
             if (screen) screen.classList.toggle("paused-controls", video.paused);
           }
+
+          video.muted = true;
+          var playPromise = video.play();
+          if (playPromise && playPromise.catch) playPromise.catch(function () {});
 
           function togglePlay() {
             if (video.paused) video.play(); else video.pause();
