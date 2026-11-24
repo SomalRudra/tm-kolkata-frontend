@@ -1,5 +1,4 @@
 const WHATSAPP_NUMBER = "918981887910";
-const WHATSAPP_BASE_TEXT = "Hi, I have a question about Transcendental Meditation Kolkata";
 const CLIENT_SITE_URL = "https://tmkolkata.org/";
 const ANALYTICS_FUNNEL_URL = window.TM_KOLKATA_ANALYTICS_URL || "https://analytics.tmkolkata.org/";
 const EVENT_FEED_URL = window.TM_KOLKATA_EVENTS_URL || ANALYTICS_FUNNEL_URL;
@@ -8,18 +7,13 @@ const API_BASE_URL = window.TM_KOLKATA_API_URL || "https://tm-kolkata-backend-pr
 const navToggle = document.querySelector(".nav-toggle");
 const siteNav = document.querySelector("#mobile-menu");
 const siteHeader = document.querySelector(".site-header");
-const modal = document.querySelector("#question-modal");
 const videoModal = document.querySelector("#video-modal");
-const openQuestionButtons = document.querySelectorAll("[data-open-question]");
-const closeModalButtons = document.querySelectorAll("[data-close-modal]");
 const openVideoButtons = document.querySelectorAll("[data-open-video]");
 const closeVideoButtons = document.querySelectorAll("[data-close-video]");
 const registrationSection = document.querySelector("#register");
 const registrationForm = registrationSection.querySelector("form");
 const registrationToggle = document.querySelector("[data-toggle-registration]");
-const questionForm = document.querySelector("#question-form");
 const eventGrid = document.querySelector("#event-grid");
-const preferredDateSelect = registrationForm.elements.preferredDate;
 const tabButtons = document.querySelectorAll("[role='tab'][data-tab]");
 const tabPanels = document.querySelectorAll("[role='tabpanel'][data-panel]");
 const navLinks = document.querySelectorAll(".site-nav a[href^='#']");
@@ -27,6 +21,7 @@ const spySections = Array.from(navLinks)
   .map((link) => document.querySelector(link.getAttribute("href")))
   .filter(Boolean);
 let publishedEvents = [];
+let selectedRegistrationEvent = null;
 
 function getNextWeekdayDate(targetWeekday, hour, minute) {
   const date = new Date();
@@ -75,15 +70,7 @@ function getTrafficAttribution() {
 }
 
 function formToObject(form) {
-  const formData = new FormData(form);
-  const payload = Object.fromEntries(formData.entries());
-  const motivations = formData.getAll("motivation");
-
-  if (motivations.length) {
-    payload.motivation = motivations.join(", ");
-  }
-
-  return payload;
+  return Object.fromEntries(new FormData(form).entries());
 }
 
 function setMessage(form, message, isError = false) {
@@ -222,14 +209,8 @@ function renderEvents(events) {
   const sessions = events.length ? events : getFallbackEvents();
   publishedEvents = sessions;
   eventGrid.innerHTML = "";
-  preferredDateSelect.innerHTML = '<option value="">Choose a date</option>';
 
   sessions.forEach((tmEvent) => {
-    const option = document.createElement("option");
-    option.value = String(tmEvent.id);
-    option.textContent = eventLabel(tmEvent);
-    preferredDateSelect.append(option);
-
     const card = document.createElement("article");
     card.className = "event-card";
     const venueDesc = tmEvent.description
@@ -283,17 +264,6 @@ function triggerJsonCallback(eventName, payload) {
   if (typeof window[callbackName] === "function") {
     window[callbackName](payload);
   }
-}
-
-function openModal() {
-  modal.setAttribute("aria-hidden", "false");
-  document.body.classList.add("modal-open");
-  modal.querySelector("input").focus();
-}
-
-function closeModal() {
-  modal.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("modal-open");
 }
 
 function openVideoModal() {
@@ -411,8 +381,6 @@ window.addEventListener("resize", () => {
   }
 });
 
-openQuestionButtons.forEach((button) => button.addEventListener("click", openModal));
-closeModalButtons.forEach((button) => button.addEventListener("click", closeModal));
 openVideoButtons.forEach((button) => button.addEventListener("click", openVideoModal));
 closeVideoButtons.forEach((button) => button.addEventListener("click", closeVideoModal));
 
@@ -433,6 +401,7 @@ document.querySelectorAll(".accordion details").forEach((details) => {
 document.querySelectorAll('a[href="#register"]').forEach((link) => {
   link.addEventListener("click", (event) => {
     event.preventDefault();
+    selectedRegistrationEvent = null;
     openRegistrationForm({ scroll: true, focusFirstField: true });
   });
 });
@@ -462,10 +431,7 @@ eventGrid.addEventListener("click", (event) => {
       event_date: tmEvent.event_date,
       event_mode: tmEvent.event_mode
     });
-    registrationForm.elements.cityArea.value = tmEvent.event_mode === "Virtual"
-      ? "Online"
-      : getDisplayRegion(tmEvent.kolkata_region);
-    preferredDateSelect.value = String(tmEvent.id);
+    selectedRegistrationEvent = tmEvent;
     openRegistrationForm({ scroll: true, focusFirstField: true });
   }
 });
@@ -473,9 +439,6 @@ eventGrid.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && siteNav.classList.contains("is-open")) {
     closeMobileMenu();
-  }
-  if (event.key === "Escape" && modal.getAttribute("aria-hidden") === "false") {
-    closeModal();
   }
   if (event.key === "Escape" && videoModal.getAttribute("aria-hidden") === "false") {
     closeVideoModal();
@@ -491,34 +454,17 @@ registrationForm.addEventListener("submit", async (event) => {
   const payload = {
     ...formToObject(registrationForm)
   };
-  const selectedEvent = publishedEvents.find((tmEvent) => String(tmEvent.id) === payload.preferredDate);
-  if (!selectedEvent) {
-    setMessage(registrationForm, "Please choose an available event.", true);
-    return;
-  }
   const registrationPayload = {
     ...getTrafficAttribution(),
-    event_id: selectedEvent.id,
     full_name: payload.fullName,
     email: payload.email,
     phone: payload.phone,
-    city_state: payload.cityState,
-    kolkata_region: getDisplayRegion(selectedEvent.kolkata_region),
-    event_date: selectedEvent.event_date,
-    event_mode: selectedEvent.event_mode,
+    gender: payload.gender,
+    age: payload.age,
+    question: payload.question,
+    event_id: selectedRegistrationEvent ? String(selectedRegistrationEvent.id) : "",
+    event_title: selectedRegistrationEvent ? selectedRegistrationEvent.title : "",
     bucket: "BUCKET_B_REGISTERED",
-    age_group: payload.ageGroup,
-    occupation: payload.occupation,
-    heard_about: payload.heardAbout,
-    motivation: payload.motivation,
-    prior_meditation: payload.priorMeditation,
-    prior_meditation_types: payload.priorMeditationTypes,
-    current_challenge: payload.currentChallenge,
-    stress_level: payload.stressLevel,
-    practice_commitment: payload.practiceCommitment,
-    best_contact_time: payload.bestContactTime,
-    future_updates: payload.futureUpdates,
-    pre_session_questions: payload.preSessionQuestions
   };
 
   persistLead("registrations", registrationPayload);
@@ -527,46 +473,23 @@ registrationForm.addEventListener("submit", async (event) => {
   await postIfConfigured("/api/leads/register", registrationPayload);
 
   registrationForm.reset();
+  selectedRegistrationEvent = null;
   setRegistrationOpen(false);
   setMessage(registrationForm, "Thank you. Your intro talk registration has been received.");
-});
-
-questionForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  if (!validateForm(questionForm)) {
-    return;
-  }
-
-  const payload = {
-    ...formToObject(questionForm)
-  };
-  const inquiryPayload = {
-    full_name: payload.fullName,
-    email: payload.email,
-    phone: payload.phone,
-    question_text: payload.question,
-    source_channel: getTrafficAttribution().source_channel,
-    bucket: "BUCKET_A_UNCONVERTED",
-    redirected_to_whatsapp: true
-  };
-
-  persistLead("questions", inquiryPayload);
-  triggerJsonCallback("tmKolkataQuestion", inquiryPayload);
-  trackAnalyticsFunnel("whatsapp_inquiry_submitted", inquiryPayload);
-  await postIfConfigured("/api/leads/inquiry", inquiryPayload);
 
   const whatsappMessage = [
-    WHATSAPP_BASE_TEXT,
+    "Hello, I am interested in Transcendental Meditation Kolkata.",
     "",
     `Name: ${payload.fullName}`,
-    `Email: ${payload.email}`,
     `Phone: ${payload.phone}`,
+    `Email: ${payload.email}`,
+    `Gender: ${payload.gender}`,
+    `Age: ${payload.age}`,
     "",
     "Question:",
     payload.question
   ].join("\n");
-  const text = encodeURIComponent(whatsappMessage);
-  window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+  window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
 });
 
 // Charts carousel

@@ -1463,8 +1463,7 @@ textarea {
   font-weight: 800;
 }
 
-.whatsapp-float,
-.question-float {
+.whatsapp-float {
   position: fixed;
   right: 18px;
   z-index: 999;
@@ -1481,13 +1480,6 @@ textarea {
   bottom: 20px;
   background: #25d366;
   color: #063d1f;
-}
-
-.question-float {
-  bottom: 76px;
-  background: var(--navy);
-  color: #fff;
-  box-shadow: 0 14px 34px rgba(11, 27, 61, 0.22);
 }
 
 .mobile-cta-bar {
@@ -1769,8 +1761,7 @@ textarea {
     padding-bottom: 132px;
   }
 
-  .whatsapp-float,
-  .question-float {
+  .whatsapp-float {
     right: 14px;
     min-height: 44px;
     padding-inline: 15px;
@@ -1779,10 +1770,6 @@ textarea {
 
   .whatsapp-float {
     bottom: 16px;
-  }
-
-  .question-float {
-    bottom: 72px;
   }
 
   .mobile-cta-bar {

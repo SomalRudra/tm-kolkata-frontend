@@ -465,35 +465,11 @@
             <form class="form-panel" method="post" novalidate hidden>
               <div class="form-grid">
                 <label>Full Name <input name="fullName" type="text" autocomplete="name" required minlength="2"></label>
-                <label>Email <input name="email" type="email" autocomplete="email" required></label>
                 <label>Phone Number <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9+\-\s]{8,15}"></label>
-                <label>City / State <input name="cityState" type="text" autocomplete="address-level2" required></label>
-                <label>Selected City Area <select name="cityArea" required><option value="">Choose an option</option><option>Bhadreswar</option><option>Online</option></select></label>
-                <label>Preferred Date <select name="preferredDate" required><option value="">Choose a date</option></select></label>
-                <label>Age Group <select name="ageGroup"><option value="">Choose an option</option><option>Under 18</option><option>18-25</option><option>26-35</option><option>36-50</option><option>51-65</option><option>Above 65</option></select></label>
-                <label>Occupation <select name="occupation"><option value="">Choose an option</option><option>Student</option><option>Working Professional</option><option>Business Owner</option><option>Homemaker</option><option>Teacher</option><option>Healthcare Professional</option><option>Retired</option><option>Other</option></select></label>
-                <label>How did you hear about this program? <select name="heardAbout"><option value="">Choose an option</option><option>Facebook</option><option>Instagram</option><option>Google Search</option><option>YouTube</option><option>Friend/Family</option><option>WhatsApp</option><option>Other</option></select></label>
-                <fieldset class="choice-group full-width">
-                  <legend>What motivated you to learn Transcendental Meditation?</legend>
-                  <label><input name="motivation" type="checkbox" value="Reduce stress"> Reduce stress</label>
-                  <label><input name="motivation" type="checkbox" value="Better sleep"> Better sleep</label>
-                  <label><input name="motivation" type="checkbox" value="Greater calm"> Greater calm</label>
-                  <label><input name="motivation" type="checkbox" value="Improve focus and memory"> Improve focus and memory</label>
-                  <label><input name="motivation" type="checkbox" value="Better decision-making"> Better decision-making</label>
-                  <label><input name="motivation" type="checkbox" value="General well-being"> General well-being</label>
-                  <label><input name="motivation" type="checkbox" value="Emotional well-being"> Emotional well-being</label>
-                  <label><input name="motivation" type="checkbox" value="Spiritual growth"> Spiritual growth</label>
-                  <label><input name="motivation" type="checkbox" value="Personal development"> Personal development</label>
-                  <label><input name="motivation" type="checkbox" value="Curiosity"> Curiosity</label>
-                </fieldset>
-                <label>Prior Meditation Practice <select name="priorMeditation"><option value="">Choose an option</option><option>No</option><option>Yes, occasionally</option><option>Yes, regularly</option></select></label>
-                <label>If yes, which type? <input name="priorMeditationTypes" type="text"></label>
-                <label class="full-width">Biggest current challenge <textarea name="currentChallenge" rows="3"></textarea></label>
-                <label>Current Stress Level <select name="stressLevel"><option value="">Choose 1-10</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label>
-                <label>Commitment to twice-daily practice <select name="practiceCommitment"><option value="">Choose an option</option><option>Very committed</option><option>Probably committed</option><option>Unsure</option></select></label>
-                <label>Best time to contact you <select name="bestContactTime"><option value="">Choose an option</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label>
-                <label>Receive future updates? <select name="futureUpdates"><option value="">Choose an option</option><option>Yes</option><option>No</option></select></label>
-                <label class="full-width">Questions before the intro session <textarea name="preSessionQuestions" rows="3"></textarea></label>
+                <label>Email Address <input name="email" type="email" autocomplete="email" required></label>
+                <label>Gender <select name="gender" required><option value="">Choose an option</option><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option></select></label>
+                <label>Age <input name="age" type="number" inputmode="numeric" min="1" max="120" required></label>
+                <label class="full-width">Question <textarea name="question" rows="4" required minlength="4"></textarea></label>
               </div>
               <p class="privacy-note">By submitting this form, you agree that the Kolkata TM coordination team may use your contact details to respond to your enquiry, reserve an introductory session, and send relevant follow-up. We do not sell personal information. See the privacy and advertising disclosure below.</p>
               <button class="button primary full-width" type="submit">Submit Registration</button>
@@ -519,9 +495,9 @@
           </div>
           <aside class="question-panel">
             <span class="type-tag online">Quick Help</span>
-            <h3>Have a specific question?</h3>
-            <p>Send it to the Kolkata coordination team and continue the conversation on WhatsApp.</p>
-            <button class="button primary full-width" type="button" data-open-question>Chat on WhatsApp</button>
+            <h3>Have a question?</h3>
+            <p>Message the Kolkata coordination team directly on WhatsApp.</p>
+            <a class="button primary full-width" href="#register">Ask on WhatsApp</a>
           </aside>
         </div>
       </section>
@@ -544,7 +520,7 @@
         </div>
         <div>
           <strong>Contact</strong>
-          <button class="text-button" type="button" data-open-question>Contact Us</button>
+          <a class="text-button" href="#register">Ask on WhatsApp</a>
         </div>
       </div>
       <div class="footer-disclosure" id="privacy">
@@ -561,25 +537,7 @@
       </p>
     </footer>
 
-    <button class="question-float" type="button" data-open-question aria-label="Ask a question">Ask a Question</button>
-    <a class="whatsapp-float" href="https://wa.me/918981887910?text=Hi%2C%20I%20have%20a%20question%20about%20Transcendental%20Meditation%20Kolkata" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp</a>
-
-    <div id="question-modal" class="modal" aria-hidden="true">
-      <div class="modal-backdrop" data-close-modal></div>
-      <section class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="question-title">
-        <button class="modal-close" type="button" aria-label="Close question form" data-close-modal>&times;</button>
-        <h2 id="question-title">Ask a question</h2>
-        <form id="question-form" method="post" novalidate>
-          <label>Full Name <input name="fullName" type="text" autocomplete="name" required minlength="2"></label>
-          <label>Email <input name="email" type="email" autocomplete="email" required></label>
-          <label>Phone Number <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9+\-\s]{8,15}"></label>
-          <label>Question <textarea name="question" rows="4" required minlength="8"></textarea></label>
-          <p class="privacy-note">Your contact details and question will be used to respond to this enquiry and continue the conversation on WhatsApp. We do not sell personal information.</p>
-          <button class="button primary full-width" type="submit">Send Query &amp; Open WhatsApp</button>
-          <p class="form-message" role="status" aria-live="polite"></p>
-        </form>
-      </section>
-    </div>
+    <a class="whatsapp-float" href="#register" aria-label="Ask on WhatsApp">Ask on WhatsApp</a>
 
     <div id="video-modal" class="modal" aria-hidden="true">
       <div class="modal-backdrop" data-close-video></div>
